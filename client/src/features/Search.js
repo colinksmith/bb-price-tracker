@@ -1,4 +1,14 @@
+import SearchBox from '../components/SearchBox';
+import DetailedCard from "../components/DetailedCard"
 import { useExampleContext } from '../contexts/ExampleContext';
+import { 
+    Label, 
+    Select, 
+    TextInput,
+    Checkbox,
+    Button,
+    buttonStyle
+} from 'flowbite-react'
 
 export default function FeatureOne() {
 
@@ -20,7 +30,71 @@ export default function FeatureOne() {
 
     return (
         <div>
-            <button className={buttonStyle} onClick={handleButton}>Feature One - Press Me!</button>
+            <form className="grid md:grid-cols-2 gap-4">
+                <div className="col-span-2">
+                    <div className="mb-2 block">
+                    </div>
+                    <TextInput
+                    id="email1"
+                    type="email"
+                    placeholder="Enter URL, SKU, or description"
+                    required={true}
+                    />
+                </div>
+                <div id="select" className="">
+                    <div className="mb-2 block">
+                        <Label
+                        htmlFor="filters"
+                        value="Filter by"
+                        />
+                    </div>
+                    <Select
+                        id="filters"
+                        required={true}
+                    >
+                        <option>
+                        all
+                        </option>
+                    </Select>
+                </div>
+                <div id="select">
+                    <div className="mb-2 block">
+                        <Label
+                        htmlFor="sort"
+                        value="Sort results by"
+                        />
+                    </div>
+                    <Select
+                        id="sort"
+                        required={true}
+                    >
+                        <option>
+                        Relevance
+                        </option>
+                        <option>
+                        Price high to low
+                        </option>
+                        <option>
+                        Price low to high
+                        </option>
+                        <option>
+                        Newest arrival
+                        </option>
+                        <option>
+                        Rating
+                        </option>
+                        <option>
+                        Number of reviews
+                        </option>
+                    </Select>
+                </div>
+                <Button className="col-span-2" type="submit">
+                    Submit
+                </Button>
+            </form>
+            
+            <DetailedCard />
+
         </div>
     )
 } 

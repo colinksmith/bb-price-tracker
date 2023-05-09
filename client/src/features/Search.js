@@ -7,8 +7,12 @@ import {
     TextInput,
     Checkbox,
     Button,
-    buttonStyle
+    Pagination
 } from 'flowbite-react'
+
+function onPageChange() {
+    console.log('page changed')
+}
 
 export default function FeatureOne() {
 
@@ -35,8 +39,8 @@ export default function FeatureOne() {
                     <div className="mb-2 block">
                     </div>
                     <TextInput
-                    id="email1"
-                    type="email"
+                    id="search--search"
+                    type="text"
                     placeholder="Enter URL, SKU, or description"
                     required={true}
                     />
@@ -94,7 +98,12 @@ export default function FeatureOne() {
             </form>
             
             <DetailedCard />
-
+            <Pagination
+                currentPage={1}
+                onPageChange={onPageChange}
+                showIcons={true}
+                totalPages={100}
+            />
         </div>
     )
 } 

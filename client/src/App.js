@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Search from './features/Search';
 import Manage from './features/Manage';
+import Item from './features/Item'
+import ErrorPage from './features/ErrorPage'
 import NavBar from './features/NavBar';
-import Footer from './features/Footer'
+import Footer from './features/Footer';
 import { Routes, Route } from 'react-router-dom';
 import APIService from './services/apiService';
 import HomePage from 'features/HomePage';
@@ -78,6 +80,9 @@ const App = () => {
           <Route index element={<HomePage/ >}></Route>
           <Route path="search" element={<Search />}></Route>
           <Route path="manage" element={<Manage />}></Route>
+          <Route path="item/:sku" element={<Item />}></Route>
+          <Route path="*" element={<ErrorPage />}></Route>
+
         </Routes>
       </main>
       <Footer />

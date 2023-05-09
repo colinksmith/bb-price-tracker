@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import FeatureOne from './features/FeatureOne';
 import FeatureTwo from './features/FeatureTwo';
+import Three from './features/Three'
 import NavBar from './features/NavBar';
-import Footer from './features/Footer'
 import { Routes, Route } from 'react-router-dom';
+import Layout from './features/Layout';
 import APIService from './services/apiService';
 import MainPage from 'features/MainPage';
 
@@ -74,13 +75,47 @@ const App = () => {
       <NavBar />
 
       <main className="mx-[10%] text-center flex flex-col justify-center">
+        <Layout />
+
         <Routes>
           <Route index element={<MainPage/ >}></Route>
           <Route path="search" element={<FeatureOne />}></Route>
           <Route path="manage" element={<FeatureTwo />}></Route>
+          <Route path="three" element={<Three />}></Route>
         </Routes>
+
+        <form className="mx-[20%] mt-10 px-[5%] border-2">
+          <div className="mt-10 overflow-auto">
+            <label className="float-left">String Field:</label>
+            <input type="text" name="stringField" onChange={(e) => handleChangeInForm(e)} className="border-2 float-right" />
+          </div>
+
+          <div className="mt-10 overflow-auto">
+            <label className="float-left">Number Field:</label>
+            <input type="text" name="numberField" onChange={(e) => handleChangeInForm(e)} className="border-2 float-right" />
+          </div>
+
+          <div className="mt-10 overflow-auto">
+            <label className="float-left">Date Field:</label>
+            <input type="date" name="dateField" onChange={(e) => handleChangeInForm(e)} className="border-2 float-right" />
+          </div>
+
+          <button className="my-10" onClick={(e) => handleSubmit(e)}>Press me to submit data!</button>
+        </form>
+
+        <h1 className="mt-20">Here is your Data:</h1>
+        <div className="mx-[20%] mb-20">
+          { data?.map(item =>
+              <ul className="my-10" key={item._id}>
+                <li>stringField: {item.stringField}</li>
+                <li>numberField: {item.numberField}</li>
+                <li>dateField: {item.dateField.substring(0,10)}</li>
+                <button onClick={(e) => { handleDelete(e, item._id) }}> Delete Me!</button>
+              </ul>
+            )
+          }
+        </div>
       </main>
-      <Footer />
 
     </div>
   )

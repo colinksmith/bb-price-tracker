@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import FeatureOne from './features/FeatureOne';
-import FeatureTwo from './features/FeatureTwo';
+import FeatureOne from './features/Search';
+import FeatureTwo from './features/Manage';
 import Three from './features/Three'
 import NavBar from './features/NavBar';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './features/Layout';
 import APIService from './services/apiService';
-import MainPage from 'features/MainPage';
+import MainPage from 'features/HomePage';
 
 
 const App = () => {

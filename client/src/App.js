@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import FeatureOne from './features/FeatureOne';
-import FeatureTwo from './features/FeatureTwo';
+import Search from './features/Search';
+import Manage from './features/Manage';
 import NavBar from './features/NavBar';
 import Footer from './features/Footer'
 import { Routes, Route } from 'react-router-dom';
 import APIService from './services/apiService';
-import MainPage from 'features/MainPage';
+import HomePage from 'features/HomePage';
 
 
 const App = () => {
@@ -75,9 +75,9 @@ const App = () => {
 
       <main className="mx-[10%] text-center flex flex-col justify-center">
         <Routes>
-          <Route index element={<MainPage/ >}></Route>
-          <Route path="search" element={<FeatureOne />}></Route>
-          <Route path="manage" element={<FeatureTwo />}></Route>
+          <Route index element={<HomePage/ >}></Route>
+          <Route path="search" element={<Search />}></Route>
+          <Route path="manage" element={<Manage />}></Route>
         </Routes>
       </main>
       <Footer />

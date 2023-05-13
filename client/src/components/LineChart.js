@@ -46,20 +46,23 @@ const options = {
             }
         },
         y: {
-            type: 'time',
-            time: {
-                parser: 'HH:mm',
-                unit: 'hour',
-                stepSize: 1,
-                displayFormats: {
-                    hour: 'HH:mm'
-                },
-                tooltipFormat: 'HH:mm'
-            },
+            type: 'linear',
             ticks: {
-                min: '00:00',
-                max: '08:00'
+                stepsize: 1,
             }
+            // time: {
+            //     parser: 'HH:mm',
+            //     unit: 'hour',
+            //     stepSize: 1,
+            //     displayFormats: {
+            //         hour: 'HH:mm'
+            //     },
+            //     tooltipFormat: 'HH:mm'
+            // },
+            // ticks: {
+            //     min: '00:00',
+            //     max: '08:00'
+            // }
         }
     }
 };
@@ -69,9 +72,9 @@ const data = {
         {
             label: 'Dataset 1',
             data: [
-                { x: '2022-11-06', y: '02:00' }, 
-                { x: '2022-11-07', y: '08:00' }, 
-                { x: '2022-11-08', y: '06:00' }
+                { x: '2022-11-08', y: '1425' },
+                { x: '2022-11-07', y: '1500' }, 
+                { x: '2022-11-06', y: '1400' }, 
             ],
             showLine: true,
             borderColor: 'rgb(255, 99, 132)',

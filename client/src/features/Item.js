@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import DetailedCard from "components/DetailedCard"
-// import LineChart from "components/LineChart"
+import LineChart from "components/LineChart"
 import { 
     Label, 
     TextInput,
@@ -47,7 +47,7 @@ export default function() {
                     Submit
                 </Button>
             </form>
-            {/* <LineChart /> */}
+            <LineChart />
         </div>
     )
 }

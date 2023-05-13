@@ -31,6 +31,8 @@
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
+    "chart.js": "^4.3.0",
+    "chartjs-adapter-moment": "^1.0.1",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -41,8 +43,10 @@
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
     "joi": "^17.7.0",
+    "moment": "^2.29.4",
     "mongodb": "^3.7.3",
-    "mongoose": "^5.12.3"
+    "mongoose": "^5.12.3",
+    "react-chartjs-2": "^5.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

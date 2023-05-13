@@ -8,8 +8,10 @@ import {
     Title,
     Tooltip,
     Legend,
+    TimeScale
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Scatter } from 'react-chartjs-2';
+import 'chartjs-adapter-moment';
 
 ChartJS.register(
     CategoryScale,
@@ -18,44 +20,72 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    TimeScale,
 );
 
-export const options = {
+const options = {
     responsive: true,
     plugins: {
         legend: {
-            position: 'top',
+            position: 'bottom',
         },
         title: {
             display: true,
-            text: 'Chart.js Line Chart',
+            text: 'Price History',
         },
     },
+    scales: {
+        x: {
+            type: 'time',
+            time: {
+                unit: 'day',
+                displayFormats: {
+                    day: 'D MMM yyyy'
+                }
+            }
+        },
+        y: {
+            type: 'time',
+            time: {
+                parser: 'HH:mm',
+                unit: 'hour',
+                stepSize: 1,
+                displayFormats: {
+                    hour: 'HH:mm'
+                },
+                tooltipFormat: 'HH:mm'
+            },
+            ticks: {
+                min: '00:00',
+                max: '08:00'
+            }
+        }
+    }
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-export const data = {
-    labels,
+const data = {
     datasets: [
         {
             label: 'Dataset 1',
-            data: [1, 7, 12, 5, 16, 2, 22],
+            data: [
+                { x: '2022-11-06', y: '02:00' }, 
+                { x: '2022-11-07', y: '08:00' }, 
+                { x: '2022-11-08', y: '06:00' }
+            ],
+            showLine: true,
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-        {
-            label: 'Dataset 2',
-            data: [7, 12, 5, 16, 2, 22, 0],
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
         },
     ],
 };
 
 function LineChart() {
-    return <Line options={options} data={data} />;
+    return <Scatter 
+        options={options}
+        data={data}
+
+    />;
 }
 
 export default LineChart

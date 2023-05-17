@@ -33,12 +33,12 @@ async function getSrcContent(selector, page) {
     return src
 }
 
-async function scrapeItemData() {
+async function scrapeItemData(destinationUrl) {
     const output = {prices: {}}
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
 
-    await page.goto(urlLink)
+    await page.goto(destinationUrl)
 
     const sku = await getTextContent('.sku .product-data-value', page)
     output.sku = Number(sku)
@@ -72,8 +72,12 @@ async function scrapeItemData() {
     return output
 }
 async function main() {
-    let log = await scrapeItemData()
+    let log = await scrapeItemData(urlLink)
     console.log(log)
 }
 
 main()
+
+module.exports = {
+    scrapeItemData,
+};

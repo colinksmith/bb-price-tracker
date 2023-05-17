@@ -10,6 +10,7 @@ import {
 
 export default function(props) {
     const { sku } = useParams()
+    // console.log(sku)
 
     return (
         <div>
@@ -30,6 +31,15 @@ export default function(props) {
                     required={true}
                     onChange={(e) => props.handleChangeInForm(e)}
                     name="email"
+                    />
+                </div>
+                <div>
+                    <input
+                    id="url"
+                    type="hidden"
+                    required={true}
+                    name="initialUrl"
+                    value={sku}
                     />
                 </div>
                 <div>

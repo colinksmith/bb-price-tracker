@@ -9,7 +9,7 @@ module.exports = {
 
     // consume the example 
     const example = req.body;
-    console.log(example)
+    // console.log(example)
     const result = await PriceWatch.create(example);
     
     const targetID = result._id;

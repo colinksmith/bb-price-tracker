@@ -6,15 +6,18 @@ STRING_MAX_LENGTH = 100;
 // Define the schema of the "event" object
 const PriceWatchSchema = new mongoose.Schema(
   {
-    sku: {
-        type: Number,
-        required: true,
+    item: {
+        type: mongoose.Schema.Types.ObjectId,
     },
     desiredPrice: {
         type: Number,
         required: true,
     },
     email: {
+        type: String,
+        required: true,
+    },
+    initialUrl: {
         type: String,
         required: true,
     }
@@ -31,7 +34,7 @@ const PriceWatch = mongoose.model("PriceWatch", PriceWatchSchema);
 const createPriceWatchSchema = Joi.object({
   email: Joi.string().trim().min(1).max(100).required(),
   desiredPrice: Joi.number().min(1).max(999999999).required(),
-  sku: Joi.number().min(1).max(100).required(),
+  initialUrl: Joi.string().trim().uri()
 });
 
 // Export our schemas to be used in other files

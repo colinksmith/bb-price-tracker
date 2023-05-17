@@ -5,7 +5,7 @@ import Item from './features/Item'
 import ErrorPage from './features/ErrorPage'
 import NavBar from './features/NavBar';
 import Footer from './features/Footer';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import APIService from './services/apiService';
 import HomePage from 'features/HomePage';
 
@@ -17,12 +17,18 @@ const App = () => {
 
   const [formData, setFormData] = useState([]);
 
+  let location = useLocation()
+
   // Fetch events from server
   const fetchData = async () => {
     // Database data from server
     const response = await APIService.getAllExamples();
     setData(response.data);
   }
+
+  useEffect(() => {
+    setFormData([])
+  }, [location])
   
   // Fetch the data on page load, don't set loading to false until data's fetched.
   // useEffect(() => {
@@ -88,10 +94,10 @@ const App = () => {
 
       <main className="mx-[10%] text-center flex flex-col justify-center">
         <Routes>
-          <Route index element={<HomePage/ >}></Route>
+          <Route index element={<HomePage handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} />}></Route>
           <Route path="search" element={<Search />}></Route>
           <Route path="manage" element={<Manage />}></Route>
-          <Route path="item/:sku" element={<Item handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} />}></Route>
+          <Route path="item/:sku" element={<Item handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} location={location} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 
         </Routes>

@@ -8,12 +8,13 @@ import {
     Button,
 } from 'flowbite-react'
 
-export default function() {
+export default function(props) {
     const { sku } = useParams()
+
     return (
         <div>
             <DetailedCard />
-            <form className="flex flex-col gap-4 border p-5">
+            <form className="flex flex-col gap-4 border p-5" onSubmit={props.handleSubmit}>
                 <h2>Create a price watch</h2>
                 <div>
                     <div className="mb-2 block">
@@ -27,6 +28,8 @@ export default function() {
                     type="email"
                     placeholder="name@mail.com"
                     required={true}
+                    onChange={(e) => props.handleChangeInForm(e)}
+                    name="email"
                     />
                 </div>
                 <div>
@@ -41,6 +44,8 @@ export default function() {
                     type="string"
                     placeholder="$99.99"
                     required={true}
+                    onChange={(e) => props.handleChangeInForm(e)}
+                    name="desiredPrice"
                     />
                 </div>
                 <Button type="submit">

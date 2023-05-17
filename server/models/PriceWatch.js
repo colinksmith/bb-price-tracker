@@ -6,8 +6,8 @@ STRING_MAX_LENGTH = 100;
 // Define the schema of the "event" object
 const PriceWatchSchema = new mongoose.Schema(
   {
-    productID: {
-        type: mongoose.Schema.Types.ObjectId,
+    sku: {
+        type: Number,
         required: true,
     },
     desiredPrice: {
@@ -29,12 +29,9 @@ const PriceWatch = mongoose.model("PriceWatch", PriceWatchSchema);
 
 // Schema for validating the recieved request.body when before an PriceWatch object is instantiated.
 const createPriceWatchSchema = Joi.object({
-  stringField: Joi.string().trim().min(1).max(100).required(),
-  numberField: Joi.number().min(1).max(100).required(),
-  dateField: Joi.date()
-    // Subtract one day because time on server may differ from client
-    .min(new Date() - 60 * 60 * 24 * 1000)
-    .required()
+  email: Joi.string().trim().min(1).max(100).required(),
+  desiredPrice: Joi.number().min(1).max(999999999).required(),
+  sku: Joi.number().min(1).max(100).required(),
 });
 
 // Export our schemas to be used in other files

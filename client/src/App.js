@@ -25,35 +25,46 @@ const App = () => {
   }
   
   // Fetch the data on page load, don't set loading to false until data's fetched.
-  useEffect(() => {
-    setLoading(true);
-    fetchData()
-    .then(setLoading(false)).catch(setLoading(false));
-  }, [])
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetchData()
+  //   .then(setLoading(false)).catch(setLoading(false));
+  // }, [])
 
 
   /* Handle Data Changes */
   const handleChangeInForm = (e) => {
     // Set the target state to the new form field value
     const {name, value} = e.target;
-    setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
+    setFormData(prevFormData => {
+      if (name === 'price') {
+        return ({ ...prevFormData, [name]: Number(value) })
+      } else {
+        return ({ ...prevFormData, [name]: value })
+      }
+    });
   }
 
   /* Data Submission */
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setFormData(prevFormData => {
+      const temp = window.location.pathname.split('/')
+      const sku = Number(temp[temp.length - 1])
+      return ({ ...prevFormData, sku: sku })
+    })
     // Example
     try {
       // Axios automatically serializes object to JSON
       // https://masteringjs.io/tutorials/axios/post-json
-      const response = await APIService.createExample(formData);
+      console.log(formData)
+      const response = await APIService.createPriceWatch(formData);
     } catch (err) {
       return
     }
 
     // Re-fetch data after addition
-    fetchData();
+    // fetchData();
   }
 
   /* Data Deletion */
@@ -69,7 +80,7 @@ const App = () => {
   }
 
   // Render nothing while fetching for data from server
-  if (loading) return null;
+  // if (loading) return null;
 
   return (
     <div className="">
@@ -80,7 +91,7 @@ const App = () => {
           <Route index element={<HomePage/ >}></Route>
           <Route path="search" element={<Search />}></Route>
           <Route path="manage" element={<Manage />}></Route>
-          <Route path="item/:sku" element={<Item />}></Route>
+          <Route path="item/:sku" element={<Item handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 
         </Routes>

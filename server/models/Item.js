@@ -22,7 +22,7 @@ const ItemSchema = new mongoose.Schema(
         type: String,
         required: true,
     },
-    Url: {
+    url: {
         type: String,
         required: true,
     },
@@ -42,6 +42,9 @@ const ItemSchema = new mongoose.Schema(
     ratingCount: {
         type: Number,
     },
+    priceWatches: {
+        type: Array,
+    }
 
   },
   // Enable timestamps for when each entry was created and last updated
@@ -53,12 +56,12 @@ const Item = mongoose.model("Item", ItemSchema);
 
 // Schema for validating the recieved request.body when before an Item object is instantiated.
 const createItemSchema = Joi.object({
-  stringField: Joi.string().trim().min(1).max(100).required(),
-  numberField: Joi.number().min(1).max(100).required(),
-  dateField: Joi.date()
-    // Subtract one day because time on server may differ from client
-    .min(new Date() - 60 * 60 * 24 * 1000)
-    .required()
+//   stringField: Joi.string().trim().min(1).max(100).required(),
+//   numberField: Joi.number().min(1).max(100).required(),
+//   dateField: Joi.date()
+//     // Subtract one day because time on server may differ from client
+//     .min(new Date() - 60 * 60 * 24 * 1000)
+//     .required()
 });
 
 // Export our schemas to be used in other files

@@ -9,6 +9,10 @@ const PriceWatchSchema = new mongoose.Schema(
     item: {
         type: mongoose.Schema.Types.ObjectId,
     },
+    sku: {
+        type: Number,
+        required: true,
+    },
     desiredPrice: {
         type: Number,
         required: true,
@@ -34,7 +38,8 @@ const PriceWatch = mongoose.model("PriceWatch", PriceWatchSchema);
 const createPriceWatchSchema = Joi.object({
   email: Joi.string().trim().min(1).max(100).required(),
   desiredPrice: Joi.number().min(1).max(999999999).required(),
-  initialUrl: Joi.string().trim().uri()
+  initialUrl: Joi.string().trim().uri(),
+  sku: Joi.number()
 });
 
 // Export our schemas to be used in other files

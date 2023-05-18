@@ -8,7 +8,7 @@ const exItem = {
   URL: 'https://www.bestbuy.com/site/samsung-5-5-cu-ft-extra-large-capacity-smart-top-load-washer-with-super-speed-wash-ivory/6529821.p?skuId=6529821',
   category: 'Appliances',
   rating: 4.6,
-  reviewCount: 381,
+  ratingCount: 381,
 }
 
 const puppeteer = require('puppeteer')
@@ -44,8 +44,8 @@ async function scrapeItemData(destinationUrl) {
     output.sku = Number(sku)
     output.model = await getTextContent('.model .product-data-value', page)
     output.title = await getTextContent('.sku-title h1', page)
-    output.pictureURL = await getSrcContent('.primary-image-selected img', page)
-    output.URL = page.url()
+    output.pictureUrl = await getSrcContent('.primary-image-selected img', page)
+    output.url = page.url()
     const currentPrice = await getTextContent('.priceView-customer-price span', page)
     output.prices.current = Number(currentPrice.replaceAll('$' , '').replaceAll(',' , ''))
     if (await page.$('.pricing-price__regular-price')) {
@@ -61,22 +61,30 @@ async function scrapeItemData(destinationUrl) {
         output.prices.noSale = output.prices.current
     }
     output.category = await getTextContent('.c-breadcrumbs-list-item + .c-breadcrumbs-list-item a', page)
-    const rating = await getTextContent('.ugc-c-review-average', page)
+    let rating = 0
+    if (await page.$('.ugc-c-review-average')) {
+        rating = await getTextContent('.ugc-c-review-average', page)
+    } else {
+        rating = 0
+    }
     output.rating = Number(rating)
     //format displayed reviews eg 1,533 into number
-    const reviewCount = await getTextContent('.c-reviews', page)
-    output.reviewCount = Number( reviewCount.split(' ')[0].slice(1).replace(',', '') )
-
     
+    let ratingCount = 0
+    if (await page.$('.c-reviews')) {
+        ratingCount = await getTextContent('.c-reviews', page)
+    } else {
+        ratingCount = 0
+    }
+    output.ratingCount = Number( ratingCount.split(' ')[0].slice(1).replace(',', '') )
+    output.priceWatches = []
 
+    browser.close()
     return output
 }
 async function main() {
     let log = await scrapeItemData(urlLink)
-    console.log(log)
 }
-
-main()
 
 module.exports = {
     scrapeItemData,

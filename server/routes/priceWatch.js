@@ -14,8 +14,6 @@ function logSomething() {
 router.post(
     "/",
     validateBody(createPriceWatchSchema),
-    // maxExamples,
-    // This calls the examples controller
     priceWatchController.create
   );
 

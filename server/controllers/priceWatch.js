@@ -1,7 +1,9 @@
+const mongoose = require("mongoose");
 const { Example } = require("../models/Example");
-const Item = require("../models/Item")
 const { PriceWatch } = require("../models/PriceWatch")
+const { Item } = require("../models/Item")
 const httpError = require("../utilities/httpError");
+const { scrapeItemData } = require('../scraper/scraper')
 require("express-async-errors");
 
 module.exports = {
@@ -9,15 +11,29 @@ module.exports = {
 
     // consume the example 
     const example = req.body;
-    // console.log(example)
+    const sku = example.initialUrl.split('=')
+    example.sku = Number(sku[sku.length - 1])
+    example._id = new mongoose.Types.ObjectId()
     const result = await PriceWatch.create(example);
-    
+    // console.log(result)
     const targetID = result._id;
     const addedExamples = await PriceWatch.find({ _id: targetID })
       .lean()
       .exec();
 
-    res.status(201).json({ message: "Example created!", example: addedExamples });
+    if (await Item.findOne({sku: example.sku})) {
+      await Item.updateOne(
+        {sku: example.sku},
+        {$push: {priceWatches: example._id}}
+      )
+      console.log(`price watch added to existing item`)
+    } else {
+      const scrapeData = await scrapeItemData(example.initialUrl)
+      scrapeData.priceWatches.push(example._id)
+      await Item.create(scrapeData)
+      console.log('price watch added and item scraped')
+    }
+    res.status(201).json({ message: "Price Watch created!", example: addedExamples });
   },
   getAll: async (req, res) => {
     // Get an array of ALL example

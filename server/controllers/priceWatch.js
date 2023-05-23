@@ -30,6 +30,10 @@ module.exports = {
     } else {
       const scrapeData = await scrapeItemData(example.initialUrl)
       scrapeData.priceWatches.push(example._id)
+      scrapeData.priceData = []
+      scrapeData.priceData.push({date: new Date, price: scrapeData.price.current})
+      scrapeData.price.historicLow = scrapeData.price.current
+      scrapeData.price.historicHigh = scrapeData.price.noSale
       await Item.create(scrapeData)
       console.log('price watch added and item scraped')
     }

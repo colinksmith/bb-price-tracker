@@ -1,26 +1,34 @@
 import React from 'react'
 
-export default function() {
+export default function(props) {
+    const {
+        category,
+        model,
+        pictureUrl,
+        sku,
+        title,
+        url,
+        price,
+    } = props.data
     return (
         <div className="grid grid-cols-3">
-            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6501/6501491_sd.jpg;maxHeight=2000;maxWidth=2000"></img>
+            <img src={pictureUrl}></img>
             <div>
-            <h6>lg 65" oled tv</h6>
-                <p>TV & Home Theater -{'>'} TVs -{'>'} All Flat-Screen TVs</p>
-                <p>Model: OLED65C2PUA</p>
-                <p>sku: 6501491</p>
+            <h6>{title}</h6>
+                <p>{category}</p>
+                <p>Model: {model}</p>
+                <p>sku: {sku}</p>
             </div>
             <div>
                 <span>Current price:</span>
-                <p>$1,599.99 -- Was $1,699.99</p>
+                <p>${price?.current} -- Was ${price?.noSale}</p>
                 <span>Historic Low:</span>
-                <p>$1,599.99</p>
+                <p>${price?.historicLow}</p>
                 <span>Historic High:</span>
-                <p>$2699.99</p>
+                <p>${price?.historicHigh}</p>
             </div>
             <div className="col-start-2">
-                <a>View on Bestbuy</a>
-                <button>Track this price</button>
+                <a href={url}>View on Bestbuy</a>
             </div>
         </div>
     )

@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react'
+import APIService from '../services/apiService';
 import { useParams } from "react-router-dom"
 import DetailedCard from "components/DetailedCard"
 import LineChart from "components/LineChart"
@@ -9,12 +11,32 @@ import {
 } from 'flowbite-react'
 
 export default function(props) {
-    const { sku } = useParams()
-    // console.log(sku)
+    const { id } = useParams()
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+
+    // Fetch events from server
+    const fetchData = async () => {
+        // Database data from server
+        const response = await APIService.getItemById(id);
+        setData(response.data);
+    }
+
+    // Fetch the data on page load, don't set loading to false until data's fetched.
+    useEffect(() => {
+        setLoading(true);
+        fetchData()
+        .then(setLoading(false)).catch(setLoading(false));
+    }, [])
+    console.log(data)
+
+    if (loading) return null;
 
     return (
         <div>
-            <DetailedCard />
+            <DetailedCard 
+                data={data}
+            />
             <form className="flex flex-col gap-4 border p-5" onSubmit={props.handleSubmit}>
                 <h2>Create a price watch</h2>
                 <div>
@@ -39,7 +61,7 @@ export default function(props) {
                     type="hidden"
                     required={true}
                     name="initialUrl"
-                    value={sku}
+                    value={id}
                     />
                 </div>
                 <div>
@@ -62,7 +84,7 @@ export default function(props) {
                     Submit
                 </Button>
             </form>
-            <LineChart />
+            <LineChart data={data}/>
         </div>
     )
 }

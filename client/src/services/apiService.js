@@ -13,9 +13,9 @@ class APIService {
   // getAllExamples() {
   //   return URL.get("/examples/");
   // }
-  // getExampleById(id) {
-  //   return URL.get(`/examples/${id}`);
-  // }
+  getItemById(id) {
+    return URL.get(`/item/${id}`);
+  }
   // deleteExample(id) {
   //   return URL.delete(`/examples/${id}`)
   // }

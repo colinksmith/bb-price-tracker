@@ -74,16 +74,16 @@ const App = () => {
   }
 
   /* Data Deletion */
-  const handleDelete = async (event, idToDelete) => {
-    try {
-      const response = await APIService.deleteExample(idToDelete);
-    } catch (err) {
-      return
-    }
+  // const handleDelete = async (event, idToDelete) => {
+  //   try {
+  //     const response = await APIService.deleteExample(idToDelete);
+  //   } catch (err) {
+  //     return
+  //   }
 
-    // Re-fetch data after delete
-    fetchData();
-  }
+  //   // Re-fetch data after delete
+  //   fetchData();
+  // }
 
   // Render nothing while fetching for data from server
   // if (loading) return null;
@@ -97,7 +97,7 @@ const App = () => {
           <Route index element={<HomePage handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} />}></Route>
           <Route path="search" element={<Search />}></Route>
           <Route path="manage" element={<Manage />}></Route>
-          <Route path="item/:sku" element={<Item handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} location={location} />}></Route>
+          <Route path="item/:id" element={<Item handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} location={location} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 
         </Routes>

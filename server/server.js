@@ -10,6 +10,7 @@ const connectDB = require("./config/database");
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
 const priceWatchRoutes = require("./routes/priceWatch");
+const itemRoutes = require("./routes/item")
 
 // Enable CORS for client origin only
 const cors = require('cors')
@@ -40,6 +41,7 @@ app.use(flash());
 
 //Setup Routes For Which The Server Is Listening
 app.use("/priceWatch", priceWatchRoutes);
+app.use("/item/", itemRoutes);
 
 // 404 handler
 app.use((req, res) => {

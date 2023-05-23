@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -67,26 +67,49 @@ const options = {
     }
 };
 
-const data = {
-    datasets: [
-        {
-            label: 'Dataset 1',
-            data: [
-                { x: '2022-11-08', y: '1425' },
-                { x: '2022-11-07', y: '1500' }, 
-                { x: '2022-11-06', y: '1400' }, 
-            ],
-            showLine: true,
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-    ],
-};
+// const data = {
+//     datasets: [
+//         {
+//             label: 'Dataset 1',
+//             data: [
+//                 { x: '2022-11-08', y: '1425' },
+//                 { x: '2022-11-07', y: '1500' }, 
+//                 { x: '2022-11-06', y: '1400' }, 
+//             ],
+//             showLine: true,
+//             borderColor: 'rgb(255, 99, 132)',
+//             backgroundColor: 'rgba(255, 99, 132, 0.5)',
+//         },
+//     ],
+// };
 
-function LineChart() {
+function LineChart(props) {
+
+    if (props.data.priceData) {
+        props.data.priceData.map(dataPoint => {
+            dataPoint.x = dataPoint.date
+            dataPoint.y = dataPoint.price
+            return dataPoint
+        })
+    }
+
+    console.log(props.data.priceData)
+
+    const chartData = {
+        datasets: [
+            {
+                label: 'Dataset 1',
+                data: props.data.priceData,
+                showLine: true,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+        ]
+    }
+    
     return <Scatter 
         options={options}
-        data={data}
+        data={chartData}
 
     />;
 }

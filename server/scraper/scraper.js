@@ -1,6 +1,6 @@
 //example object
 const exItem = {
-  prices: { current: 799.99, noSale: 1079.99 },
+  price: { current: 799.99, noSale: 1079.99 },
   sku: '6529821 ',
   model: 'WA55A7300AE/US ',
   title: 'Samsung - 5.5 cu. ft. Extra-Large Capacity Smart Top Load Washer with Super Speed Wash - Ivory',
@@ -34,7 +34,7 @@ async function getSrcContent(selector, page) {
 }
 
 async function scrapeItemData(destinationUrl) {
-    const output = {prices: {}}
+    const output = {price: {}}
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
 
@@ -47,10 +47,10 @@ async function scrapeItemData(destinationUrl) {
     output.pictureUrl = await getSrcContent('.primary-image-selected img', page)
     output.url = page.url()
     const currentPrice = await getTextContent('.priceView-customer-price span', page)
-    output.prices.current = Number(currentPrice.replaceAll('$' , '').replaceAll(',' , ''))
+    output.price.current = Number(currentPrice.replaceAll('$' , '').replaceAll(',' , ''))
     if (await page.$('.pricing-price__regular-price')) {
         const noSale = await getTextContent('.pricing-price__regular-price', page)
-        output.prices.noSale = Number(noSale
+        output.price.noSale = Number(noSale
             .split(' ')
             .filter(x => x.includes('$'))
             [0]
@@ -58,7 +58,7 @@ async function scrapeItemData(destinationUrl) {
             .replaceAll(',' , '')
         )
     } else {
-        output.prices.noSale = output.prices.current
+        output.price.noSale = output.price.current
     }
     output.category = await getTextContent('.c-breadcrumbs-list-item + .c-breadcrumbs-list-item a', page)
     let rating = 0
@@ -78,6 +78,8 @@ async function scrapeItemData(destinationUrl) {
     }
     output.ratingCount = Number( ratingCount.split(' ')[0].slice(1).replace(',', '') )
     output.priceWatches = []
+
+    console.log(output)
 
     browser.close()
     return output

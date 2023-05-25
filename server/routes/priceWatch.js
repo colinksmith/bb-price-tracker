@@ -15,6 +15,11 @@ router.post(
     "/",
     validateBody(createPriceWatchSchema),
     priceWatchController.create
-  );
+);
+
+router.get(
+  "/manage/:email",
+  priceWatchController.getItemsFromPriceWatch
+)
 
 module.exports = router;

@@ -52,7 +52,7 @@ const App = () => {
   }
 
   /* Data Submission */
-  const handleSubmit = async (e) => {
+  const submitPriceWatch = async (e) => {
     e.preventDefault();
     setFormData(prevFormData => {
       const temp = window.location.pathname.split('/')
@@ -94,10 +94,10 @@ const App = () => {
 
       <main className="mx-[10%] text-center flex flex-col justify-center">
         <Routes>
-          <Route index element={<HomePage handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} />}></Route>
+          <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
           <Route path="search" element={<Search />}></Route>
           <Route path="manage" element={<Manage />}></Route>
-          <Route path="item/:id" element={<Item handleSubmit={handleSubmit} handleChangeInForm={handleChangeInForm} location={location} />}></Route>
+          <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 
         </Routes>

@@ -8,6 +8,8 @@ const PriceWatchSchema = new mongoose.Schema(
   {
     item: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+        default: null,
     },
     sku: {
         type: Number,

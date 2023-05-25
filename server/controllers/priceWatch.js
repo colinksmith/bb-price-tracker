@@ -34,11 +34,29 @@ module.exports = {
       scrapeData.priceData.push({date: new Date, price: scrapeData.price.current})
       scrapeData.price.historicLow = scrapeData.price.current
       scrapeData.price.historicHigh = scrapeData.price.noSale
-      await Item.create(scrapeData)
+      scrapeData._id = new mongoose.Types.ObjectId()
+      const item = await Item.create(scrapeData)
+      console.log(result._id, item._id)
+      await PriceWatch.updateOne(
+        {_id: result._id},
+        {item: item._id}
+      )
       console.log('price watch added and item scraped')
     }
     res.status(201).json({ message: "Price Watch created!", example: addedExamples });
   },
+  getItemsFromPriceWatch: async (req, res) => {
+    console.log(req.params)
+    let priceWatches = await PriceWatch.find({email: req.params.email}).populate('item').exec()
+    console.log(priceWatches)
+    console.log(priceWatches[0].item.sku)
+    let items = []
+    for (let i = 0; i < priceWatches.length; i++) {
+
+    }
+  },
+
+  
   getAll: async (req, res) => {
     // Get an array of ALL example
     const example = await Example.find()

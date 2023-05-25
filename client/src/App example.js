@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import FeatureOne from './features/Search';
-import FeatureTwo from './features/Manage';
+import Manage from './features/Manage';
 import Three from './features/Three'
 import NavBar from './features/NavBar';
 import { Routes, Route } from 'react-router-dom';
@@ -80,7 +80,7 @@ const App = () => {
         <Routes>
           <Route index element={<MainPage/ >}></Route>
           <Route path="search" element={<FeatureOne />}></Route>
-          <Route path="manage" element={<FeatureTwo />}></Route>
+          <Route path="manage" element={<Manage />}></Route>
           <Route path="three" element={<Three />}></Route>
         </Routes>
 

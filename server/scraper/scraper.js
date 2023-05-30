@@ -49,18 +49,21 @@ async function scrapeItemData(destinationUrl) {
     const currentPrice = await getTextContent('.priceView-customer-price span', page)
     output.price.current = Number(currentPrice.replaceAll('$' , '').replaceAll(',' , ''))
 
-    if (await page.$('.pricing-price__regular-price')) {
-        const noSale = await getTextContent('.pricing-price__regular-price', page)
-        output.price.noSale = Number(noSale
-            .split(' ')
-            .filter(x => x.includes('$'))
-            [0]
-            .replaceAll('$' , '')
-            .replaceAll(',' , '')
-        )
-    } else {
-        output.price.noSale = output.price.current
-    }
+    output.price.noSale = await page.evaluate(() => {
+        let element = document.querySelector('.pricing-price__regular-price')
+        let val = null
+        if (element) {
+            val = Number(element.textContent
+                .split(' ')
+                .filter(x => x.includes('$'))
+                [0]
+                .replaceAll('$' , '')
+                .replaceAll(',' , '')
+            )
+        }
+        return val 
+    })
+        || output.price.current
     
     output.category = await getTextContent('.c-breadcrumbs-list-item + .c-breadcrumbs-list-item a', page)
     let rating = 0

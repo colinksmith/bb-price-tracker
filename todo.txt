@@ -1,0 +1,11 @@
+fix bug with scraper timing out on listings without a sale price 
+    https://stackoverflow.com/questions/58675083/how-can-i-check-if-selector-exists-in-puppeteer
+    done
+
+link products on manage and home page to product page
+
+separate response for submitting pricewatch and item being scraped
+
+schedule regular scraping of items
+
+send email when scraper finds price lower than pricewatch

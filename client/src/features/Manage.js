@@ -9,9 +9,7 @@ import {
 import { useExampleContext } from '../contexts/ExampleContext';
 
 export default function Manage(props) {
-    const [email, setEmail] = useState('')
-
-
+    console.log(props.data)
     return (
         <div>
             <form className="flex flex-col gap-4 border p-5">

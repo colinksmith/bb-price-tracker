@@ -1,7 +1,10 @@
 import React from 'react'
+import { Link } from "react-router-dom";
+
 
 export default function(props) {
     const {
+        _id,
         category,
         model,
         pictureUrl,
@@ -14,7 +17,11 @@ export default function(props) {
         <div className="grid grid-cols-3">
             <img src={pictureUrl}></img>
             <div>
-            <h6>{title}</h6>
+            <h6>
+                <Link to={'/item/' + _id}>
+                    {title}
+                </Link>
+            </h6>
                 <p>{category}</p>
                 <p>Model: {model}</p>
                 <p>sku: {sku}</p>

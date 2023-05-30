@@ -36,11 +36,10 @@ export default function Manage(props) {
                     Submit
                 </Button>
             </form>
-            { props.data?.map((item, index) => 
-                <DetailedCard data={props.data[index]} key={index}/>
+            {props.data.items && props.data.items.map((item, index) => 
+                <DetailedCard data={props.data.items[index]} key={index}/>
                 )
             }
-            {/* <DetailedCard /> */}
         </div>
     )
 } 

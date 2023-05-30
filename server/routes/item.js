@@ -16,6 +16,8 @@ const { createExampleSchema } = require("../models/Example");
 
 // router.get("/", examplesController.getAll);
 
+router.get("/recent", itemController.getRecent)
+
 router.get("/:id", validateObjectId, itemController.getOne);
 
 // router.delete(

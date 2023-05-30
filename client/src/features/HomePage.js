@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import SearchBox from "../components/SearchBox";
 import Card from "../components/Card"
 import { 
@@ -6,8 +7,34 @@ import {
     Checkbox,
     Button,
 } from 'flowbite-react'
+import APIService from '../services/apiService';
+
 
 const HomePage = (props) => {
+    const [loading, setLoading] = useState(true);
+    const [homeData, setHomeData] = useState([])
+
+    const fetchHomeData = async () => {
+        const response = await APIService.getRecentItems()
+        setHomeData(response.data)
+    }
+    
+    // Fetch the data on page load, don't set loading to false until data's fetched.
+    // useEffect(() => {
+    //   setLoading(true);
+    //   fetchData()
+    //   .then(setLoading(false)).catch(setLoading(false));
+    // }, [])
+
+    console.log(homeData)
+    useEffect(() => {
+        setLoading(true)
+        fetchHomeData()
+        .then(setLoading(false)).catch(setLoading(false))
+    }, [])
+    // Render nothing while fetching for data from server
+    if (loading) return null;
+
     return(
         <div>
             <form className="flex flex-col gap-4 border p-5" onSubmit={props.handleSubmit}>
@@ -67,22 +94,10 @@ const HomePage = (props) => {
             <div>
                 <h3>Recent searches</h3>
                 <div className="flex justify-center my-6 gap-10">
-                    <Card />
-                    <Card />
-                    <Card />
-
+                    {!loading && homeData.map((item, index) => 
+                        <Card data={item} key={index} />
+                    )}
                 </div>
-
-            </div>
-            <div>
-                <h4>Historic Lows</h4>
-                <div className="flex justify-center my-6 gap-10">
-                    <Card />
-                    <Card />
-                    <Card />
-
-                </div>
-
             </div>
         </div>
     )

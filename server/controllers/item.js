@@ -17,6 +17,16 @@ module.exports = {
 
     res.json(event);
   },
+
+  getRecent: async (req, res) => {
+    const event = await PriceWatch
+      .find({})
+      .sort({createdAt: -1})
+      .populate('item')
+      .limit(6)
+    res.json(event)
+  },
+
   deleteExample: async (req, res) => {
     const { id } = req.params;
 

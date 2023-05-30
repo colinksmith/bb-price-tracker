@@ -29,6 +29,9 @@ class APIService {
   getItemsFromPriceWatch(data) {
     return URL.post(`/priceWatch/priceWatchData`, data)
   }
+  getRecentItems() {
+    return URL.get(`/item/recent`)
+  }
 
 }
 

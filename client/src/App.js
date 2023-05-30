@@ -12,8 +12,7 @@ import HomePage from 'features/HomePage';
 
 const App = () => {
 
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
+  const [managePWData, setManagePWData] = useState([]);
 
   const [formData, setFormData] = useState([]);
 
@@ -24,19 +23,14 @@ const App = () => {
     e.preventDefault()
     // Database data from server
     const response = await APIService.getItemsFromPriceWatch(formData);
-    setData(response.data);
+    setManagePWData(response.data);
   }
 
   useEffect(() => {
     setFormData([])
   }, [location])
   
-  // Fetch the data on page load, don't set loading to false until data's fetched.
-  // useEffect(() => {
-  //   setLoading(true);
-  //   fetchData()
-  //   .then(setLoading(false)).catch(setLoading(false));
-  // }, [])
+
 
 
   /* Handle Data Changes */
@@ -85,8 +79,7 @@ const App = () => {
   //   fetchData();
   // }
 
-  // Render nothing while fetching for data from server
-  // if (loading) return null;
+
 
   return (
     <div className="">
@@ -96,7 +89,7 @@ const App = () => {
         <Routes>
           <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
           <Route path="search" element={<Search />}></Route>
-          <Route path="manage" element={<Manage handleChangeInForm={handleChangeInForm} handleSubmit={fetchPriceWatchItemData} data={data}/>}></Route>
+          <Route path="manage" element={<Manage handleChangeInForm={handleChangeInForm} handleSubmit={fetchPriceWatchItemData} data={managePWData} />}></Route>
           <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 

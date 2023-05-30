@@ -27,7 +27,7 @@ class APIService {
     return URL.post(`/priceWatch/`, data)
   }
   getItemsFromPriceWatch(data) {
-    return URL.get(`/`, data)
+    return URL.post(`/priceWatch/priceWatchData`, data)
   }
 
 }

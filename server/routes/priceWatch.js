@@ -7,8 +7,10 @@ const { createPriceWatchSchema } = require("../models/PriceWatch");
 
 // These routes extend the /examples/ route
 
-function logSomething() {
+function logSomething(data) {
     console.log('something')
+    console.log(data.body)
+    next()
 }
 
 router.post(
@@ -17,8 +19,8 @@ router.post(
     priceWatchController.create
 );
 
-router.get(
-  "/manage/:email",
+router.post(
+  "/priceWatchData",
   priceWatchController.getItemsFromPriceWatch
 )
 

@@ -46,14 +46,10 @@ module.exports = {
     res.status(201).json({ message: "Price Watch created!", example: addedExamples });
   },
   getItemsFromPriceWatch: async (req, res) => {
-    console.log(req.params)
-    let priceWatches = await PriceWatch.find({email: req.params.email}).populate('item').exec()
-    console.log(priceWatches)
-    console.log(priceWatches[0].item.sku)
-    let items = []
-    for (let i = 0; i < priceWatches.length; i++) {
-
-    }
+    const example = req.body;
+    let priceWatches = await PriceWatch.find({email: req.body.email}).populate('item').exec()
+    let items = priceWatches.map(priceWatch => priceWatch.item)
+    res.status(201).json({items})
   },
 
   

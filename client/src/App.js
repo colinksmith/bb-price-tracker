@@ -20,9 +20,10 @@ const App = () => {
   let location = useLocation()
 
   // Fetch events from server
-  const fetchData = async () => {
+  const fetchPriceWatchItemData = async (e) => {
+    e.preventDefault()
     // Database data from server
-    const response = await APIService.getAllExamples();
+    const response = await APIService.getItemsFromPriceWatch(formData);
     setData(response.data);
   }
 
@@ -63,7 +64,6 @@ const App = () => {
     try {
       // Axios automatically serializes object to JSON
       // https://masteringjs.io/tutorials/axios/post-json
-      console.log(formData)
       const response = await APIService.createPriceWatch(formData);
     } catch (err) {
       return
@@ -96,7 +96,7 @@ const App = () => {
         <Routes>
           <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
           <Route path="search" element={<Search />}></Route>
-          <Route path="manage" element={<Manage />}></Route>
+          <Route path="manage" element={<Manage handleChangeInForm={handleChangeInForm} handleSubmit={fetchPriceWatchItemData} data={data}/>}></Route>
           <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 

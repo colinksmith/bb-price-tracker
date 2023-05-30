@@ -11,18 +11,6 @@ import { useExampleContext } from '../contexts/ExampleContext';
 export default function Manage(props) {
     const [email, setEmail] = useState('')
 
-    async function getItems(e) {
-        e.preventDefault()
-        await fetch(`http://localhost:2121/pricewatch/manage/${email}`)
-    }
-
-    const handleChangeInForm = (e) => {
-        // Set the target state to the new form field value
-        const {name, value} = e.target;
-        setEmail(prevEmail => {
-            return ({ ...prevEmail, [name]: value })
-        });
-    }
 
     return (
         <div>
@@ -40,15 +28,18 @@ export default function Manage(props) {
                     type="email"
                     placeholder="name@mail.com"
                     required={true}
-                    onChange={(e) => handleChangeInForm(e)}
+                    onChange={(e) => props.handleChangeInForm(e)}
                     name="email"
                     />
                 </div>
-                <Button type="submit" onClick={getItems}>
+                <Button type="submit" onClick={props.handleSubmit}>
                     Submit
                 </Button>
             </form>
-
+            { props.data?.map((item, index) => 
+                <DetailedCard data={props.data[index]} key={index}/>
+                )
+            }
             {/* <DetailedCard /> */}
         </div>
     )

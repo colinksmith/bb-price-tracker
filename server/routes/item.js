@@ -18,6 +18,8 @@ const { createExampleSchema } = require("../models/Example");
 
 router.get("/recent", itemController.getRecent)
 
+router.get("/testing", itemController.testing)
+
 router.get("/:id", validateObjectId, itemController.getOne);
 
 // router.delete(
@@ -30,5 +32,6 @@ router.get("/:id", validateObjectId, itemController.getOne);
 //   "/deleteAllExamples/:groupId",
 //   examplesController.deleteAllExamples
 // );
+
 
 module.exports = router;

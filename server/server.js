@@ -6,6 +6,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("express-flash");
 const connectDB = require("./config/database");
+const schedule = require('node-schedule')
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -64,3 +65,9 @@ connectDB().then(() => {
     );
   });
 });
+
+// Schedule datascraping
+// const job = schedule.scheduleJob('5 0 * * *', function(){
+//   console.log('The answer to life, the universe, and everything!');
+// });
+

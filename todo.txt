@@ -3,6 +3,7 @@ fix bug with scraper timing out on listings without a sale price
     done
 
 link products on manage and home page to product page
+    done
 
 separate response for submitting pricewatch and item being scraped
     fix manage page when pricewatch is available but item is not

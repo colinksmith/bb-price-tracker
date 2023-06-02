@@ -46,6 +46,7 @@
     "moment": "^2.29.4",
     "mongodb": "^3.7.3",
     "mongoose": "^5.12.3",
+    "node-schedule": "^2.1.1",
     "puppeteer": "^20.2.0",
     "react-chartjs-2": "^5.2.0"
   },

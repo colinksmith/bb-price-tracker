@@ -4,6 +4,8 @@ const { Item } = require("../models/Item")
 const httpError = require("../utilities/httpError");
 require("express-async-errors");
 
+const { updatePrices } = require('../scraper/scraper')
+
 module.exports = {
   getOne: async (req, res) => {
     const { id } = req.params;
@@ -39,5 +41,9 @@ module.exports = {
     await Example.remove({}).exec();
 
     res.sendStatus(204);
+  },
+
+  testing: async (req, res) => {
+    await updatePrices('64762b28df347710e8542144')
   },
 };

@@ -1,26 +1,8 @@
-//example object
-const exItem = {
-  price: { current: 799.99, noSale: 1079.99 },
-  sku: '6529821 ',
-  model: 'WA55A7300AE/US ',
-  title: 'Samsung - 5.5 cu. ft. Extra-Large Capacity Smart Top Load Washer with Super Speed Wash - Ivory',
-  pictureURL: 'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6529/6529821_sd.jpg;maxHeight=640;maxWidth=550',
-  URL: 'https://www.bestbuy.com/site/samsung-5-5-cu-ft-extra-large-capacity-smart-top-load-washer-with-super-speed-wash-ivory/6529821.p?skuId=6529821',
-  category: 'Appliances',
-  rating: 4.6,
-  ratingCount: 381,
-}
-
 const puppeteer = require('puppeteer')
 const fs = require('fs')
-const homeLink = 'https://stores.bestbuy.com/'
-const baseLink = 'https://stores.bestbuy.com/site'
-const urlLink = 'https://www.bestbuy.com/site/samsung-5-5-cu-ft-extra-large-capacity-smart-top-load-washer-with-super-speed-wash-ivory/6529821.p?skuId=6529821'
-
-const dirPath = './data'
-const filePath = './data/storeData.json'
-const errorFilePath = './data/error.txt'
-const urlListPath = './data/urls'
+const mongoose = require("mongoose");
+const { PriceWatch } = require("../models/PriceWatch")
+const { Item } = require("../models/Item")
 
 async function getTextContent(selector, page) {
     let element = await page.waitForSelector(selector)
@@ -89,10 +71,30 @@ async function scrapeItemData(destinationUrl) {
     browser.close()
     return output
 }
-async function main() {
-    let log = await scrapeItemData(urlLink)
+
+async function updatePrices(itemID) {
+    //get item from db
+    const dbItem = await Item.findById(itemID)
+    //scrape data from bb.com
+    const scrapeData = await scrapeItemData(dbItem.url)
+    //update prices info in item
+    dbItem.rating = scrapeData.rating
+    dbItem.ratingCount = scrapeData.ratingCount
+    dbItem.price.current = scrapeData.price.current
+    dbItem.price.noSale = scrapeData.price.noSale
+    dbItem.price.historicLow = Math.min(dbItem.price.historicLow, scrapeData.price.current)
+    dbItem.price.historicHigh = Math.max(dbItem.price.historicHigh, scrapeData.price.noSale)
+    dbItem.priceData.push({date: new Date, price: scrapeData.price.current})
+    //push changes to db
+    await Item.findByIdAndUpdate(itemID, dbItem)
+    console.log(dbItem)
+}
+
+async function getItemList() {
+    
 }
 
 module.exports = {
     scrapeItemData,
+    updatePrices,
 };

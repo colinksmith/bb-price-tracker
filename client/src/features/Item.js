@@ -28,7 +28,12 @@ export default function(props) {
         fetchData()
         .then(setLoading(false)).catch(setLoading(false));
     }, [])
-    console.log(data)
+    
+    useEffect(() => {
+        props.setFormData(prevFormData => {
+              return ({ ...prevFormData, ['initialUrl']: data.url })
+          })
+    }, [data])
 
     if (loading) return null;
 

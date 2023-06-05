@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const { PriceWatch } = require("../models/PriceWatch")
 const { Item } = require("../models/Item")
 
+const dirPath = './data'
+const errorFilePath = './data/error.log'
+
 async function getTextContent(selector, page) {
     let element = await page.waitForSelector(selector)
     let text = await page.evaluate(element => element.textContent, element)
@@ -20,6 +23,10 @@ async function scrapeItemData(destinationUrl) {
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
 
+    page.setDefaultNavigationTimeout(90000)
+
+
+    
     await page.goto(destinationUrl)
 
     const sku = await getTextContent('.sku .product-data-value', page)
@@ -66,7 +73,7 @@ async function scrapeItemData(destinationUrl) {
     output.ratingCount = Number( ratingCount.split(' ')[0].slice(1).replace(',', '') )
     output.priceWatches = []
 
-    console.log(output)
+    // console.log(output)
 
     browser.close()
     return output
@@ -87,14 +94,79 @@ async function updatePrices(itemID) {
     dbItem.priceData.push({date: new Date, price: scrapeData.price.current})
     //push changes to db
     await Item.findByIdAndUpdate(itemID, dbItem)
-    console.log(dbItem)
 }
 
-async function getItemList() {
-    
+async function getItemIDList() {
+    let output = await Item.find({})
+    output = output.map(obj => obj._id)
+    return output
+}
+
+async function updateAllPrices() {
+    const itemIDList = await getItemIDList()
+    const failedItemList = []
+
+    async function delay() {
+        return new Promise ((resolve, reject) => {
+            setTimeout(() => {resolve()}, Math.floor(Math.random() * 4000) + 1000);
+        }) 
+    }
+
+    for (let i = 0; i < itemIDList.length; i++) {
+        try {
+            console.log(`beginning delay ${(new Date).getSeconds()}`)
+            await delay()
+            console.log(`ending delay ${(new Date).getSeconds()}`)
+            await updatePrices(itemIDList[i])
+        } catch (err) {
+            console.log(err)
+            writeError(`An error occured for this item: "${itemIDList[i]}" at index ${i}. ${err}`)
+            failedItemList.push(itemIDList)
+        }
+    }
+}
+
+async function writeError(message) {
+    const date = new Date()
+    message = `${date}: ${message}`
+    try {
+        if (fs.existsSync(errorFilePath)){
+            fs.appendFile(errorFilePath, `\n\n${message}`, (err) => {
+                if (err) throw err
+            })
+            console.log(`added error to ${errorFilePath}`)
+        } else {
+            createDir(dirPath)
+            createFile(errorFilePath, message)
+            console.log(`created ${errorFilePath}`)
+        }
+    } catch (err){
+        console.error(err)
+    }
+}
+
+const createDir = (dirPath) => {
+    fs.mkdirSync(dirPath, {recursive: true}, (error) => {
+        if (error) {
+            console.error('An error occurred: ', error)
+        } else {
+         //    console.log('Your directory is made!')
+        }
+    })
+ }
+ const createFile = (filePath, fileContent) => {
+    fs.writeFile(filePath, fileContent, (error) => {
+        if (error) {
+            console.error('An error occurred: ', error)
+        } else {
+         //    console.log('Your file is made!')
+        }
+    })
 }
 
 module.exports = {
     scrapeItemData,
     updatePrices,
+    getItemIDList,
+    updateAllPrices,
 };

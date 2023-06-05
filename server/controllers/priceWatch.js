@@ -21,10 +21,15 @@ module.exports = {
       .lean()
       .exec();
 
-    if (await Item.findOne({sku: example.sku})) {
+    let item = await Item.findOne({sku: example.sku})
+    if (item) {
       await Item.updateOne(
         {sku: example.sku},
         {$push: {priceWatches: example._id}}
+      )
+      await PriceWatch.updateOne(
+        {_id: result._id},
+        {item: item._id}
       )
       console.log(`price watch added to existing item`)
     } else {
@@ -35,7 +40,7 @@ module.exports = {
       scrapeData.price.historicLow = scrapeData.price.current
       scrapeData.price.historicHigh = scrapeData.price.noSale
       scrapeData._id = new mongoose.Types.ObjectId()
-      const item = await Item.create(scrapeData)
+      item = await Item.create(scrapeData)
       console.log(result._id, item._id)
       await PriceWatch.updateOne(
         {_id: result._id},

@@ -12,6 +12,10 @@ const schedule = require('node-schedule')
 require("dotenv").config({ path: "./config/.env" });
 const priceWatchRoutes = require("./routes/priceWatch");
 const itemRoutes = require("./routes/item")
+const itemController = require("./controllers/item")
+
+const scraper = require("./scraper/scraper")
+const nodeemailer = require("./nodeemailer/nodeemailer")
 
 // Enable CORS for client origin only
 const cors = require('cors')
@@ -67,7 +71,6 @@ connectDB().then(() => {
 });
 
 // Schedule datascraping
-// const job = schedule.scheduleJob('5 0 * * *', function(){
-//   console.log('The answer to life, the universe, and everything!');
+// const job = schedule.scheduleJob('5 0 * * *', async function(){
+//   itemController.manageDailyTasks()
 // });
-

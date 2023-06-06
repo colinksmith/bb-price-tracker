@@ -105,8 +105,9 @@ async function updatePrices(itemID) {
 }
 
 async function getItemIDList() {
-    let output = await Item.find({})
-    output = output.map(obj => obj._id)
+    let output = await PriceWatch.find({}).populate('item')
+    output = output.map(obj => obj.item._id)
+    output = [...new Set(output)]
     return output
 }
 

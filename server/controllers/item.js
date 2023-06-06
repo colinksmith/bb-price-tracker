@@ -15,9 +15,10 @@ async function manageDailyTasks (req, res) {
   //check all pricewatches
   const priceWatches = await PriceWatch.find({}).populate('item')
   //send email if below price
-  alertList = priceWatches.filter(pw => pw.desiredPrice >= pw.item.price.current)
+  let alertList = priceWatches.filter(pw => pw.desiredPrice >= pw.item.price.current)
   for (let i = 0; i < alertList.length; i++) {
     await mailOne(alertList[i])
+    await PriceWatch.findByIdAndDelete(alertList[i]._id);
   }
 }
 

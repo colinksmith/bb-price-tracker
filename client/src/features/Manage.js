@@ -16,8 +16,9 @@ export default function Manage(props) {
     console.log(props.data)
 
     useEffect(() => {
-        console.log(email)
-        props.fetchPriceWatchDataFromParams({email: email})
+        if (props.fetchPriceWatchDataFromParams) {
+            props.fetchPriceWatchDataFromParams({email: email})
+        }
     }, [])
 
     return (

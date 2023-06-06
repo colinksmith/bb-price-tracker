@@ -21,3 +21,7 @@ manage page shows pricewatch price
     done
 
 nodemailer create link to manage page with email filled out
+    done
+
+scraper for pre order items - not yet reviewed -> 0
+    done

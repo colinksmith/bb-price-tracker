@@ -49,7 +49,7 @@ async function scrapeItemData(destinationUrl) {
     output.price.noSale = await page.evaluate(() => {
         let element = document.querySelector('.pricing-price__regular-price')
         let val = null
-        if (element) {
+        if (element && element !== 'Not yet reviewed') {
             val = Number(element.textContent
                 .split(' ')
                 .filter(x => x.includes('$'))

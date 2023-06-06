@@ -34,8 +34,8 @@ export default function Manage(props) {
                     Submit
                 </Button>
             </form>
-            {props.data.items && props.data.items.map((item, index) => 
-                <DetailedCard data={props.data.items[index]} key={index}/>
+            {props.data.priceWatches && props.data.priceWatches.map((priceWatch, index) => 
+                <DetailedCard data={props.data.priceWatches[index].item} priceWatch={props.data.priceWatches[index]} key={index}/>
                 )
             }
         </div>

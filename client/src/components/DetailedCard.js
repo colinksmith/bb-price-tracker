@@ -34,10 +34,19 @@ export default function(props) {
                 <p>${price?.historicLow}</p>
                 <span>Historic High:</span>
                 <p>${price?.historicHigh}</p>
+                {props.priceWatch && 
+                    <p>Alert me at ${props.priceWatch.desiredPrice}</p>
+                }
             </div>
             <div className="col-start-2">
                 <a href={url}>View on Bestbuy</a>
             </div>
+            {props.priceWatch && 
+                <div className="col-start-3">
+                    <button>Delete this alert</button>
+                </div>
+            }
+            
         </div>
     )
 }

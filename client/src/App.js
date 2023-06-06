@@ -19,10 +19,10 @@ const App = () => {
   let location = useLocation()
 
   // Fetch events from server
-  const fetchPriceWatchItemData = async (e) => {
+  const fetchPriceWatchData = async (e) => {
     e.preventDefault()
     // Database data from server
-    const response = await APIService.getItemsFromPriceWatch(formData);
+    const response = await APIService.getUserPriceWatch(formData);
     setManagePWData(response.data);
   }
 
@@ -89,7 +89,7 @@ const App = () => {
         <Routes>
           <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
           <Route path="search" element={<Search />}></Route>
-          <Route path="manage" element={<Manage handleChangeInForm={handleChangeInForm} handleSubmit={fetchPriceWatchItemData} data={managePWData} />}></Route>
+          <Route path="manage" element={<Manage handleChangeInForm={handleChangeInForm} handleSubmit={fetchPriceWatchData} data={managePWData} />}></Route>
           <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} setFormData={setFormData} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 

@@ -53,8 +53,8 @@ module.exports = {
   getItemsFromPriceWatch: async (req, res) => {
     const example = req.body;
     let priceWatches = await PriceWatch.find({email: req.body.email}).populate('item').exec()
-    let items = priceWatches.map(priceWatch => priceWatch.item)
-    res.status(201).json({items})
+    // let items = priceWatches.map(priceWatch => priceWatch.item)
+    res.status(201).json({priceWatches})
   },
 
   

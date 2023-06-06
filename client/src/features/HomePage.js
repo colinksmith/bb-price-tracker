@@ -18,13 +18,6 @@ const HomePage = (props) => {
         const response = await APIService.getRecentItems()
         setHomeData(response.data)
     }
-    
-    // Fetch the data on page load, don't set loading to false until data's fetched.
-    // useEffect(() => {
-    //   setLoading(true);
-    //   fetchData()
-    //   .then(setLoading(false)).catch(setLoading(false));
-    // }, [])
 
     console.log(homeData)
     useEffect(() => {

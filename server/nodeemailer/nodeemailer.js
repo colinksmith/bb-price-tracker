@@ -70,5 +70,5 @@ async function testEmail(priceWatch) {
 }
 
 module.exports = {
-    testEmail,
+  mailOne,
 };

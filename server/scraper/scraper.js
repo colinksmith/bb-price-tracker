@@ -8,14 +8,24 @@ const dirPath = './data'
 const errorFilePath = './data/error.log'
 
 async function getTextContent(selector, page) {
-    let element = await page.waitForSelector(selector)
-    let text = await page.evaluate(element => element.textContent, element)
-    return text
+    try {
+        let element = await page.waitForSelector(selector)
+        let text = await page.evaluate(element => element.textContent, element)
+        return text
+    } catch(err) {
+        console.log(err)
+        return null
+    }
 }
 async function getSrcContent(selector, page) {
-    let element = await page.waitForSelector(selector)
-    let src = await page.evaluate(element => element.src, element)
-    return src
+    try {
+        let element = await page.waitForSelector(selector)
+        let src = await page.evaluate(element => element.src, element)
+        return src
+    } catch(err) {
+        console.log(err)
+        return null
+    }
 }
 
 async function scrapeItemData(destinationUrl) {
@@ -25,8 +35,6 @@ async function scrapeItemData(destinationUrl) {
 
     page.setDefaultNavigationTimeout(90000)
 
-
-    
     await page.goto(destinationUrl)
 
     const sku = await getTextContent('.sku .product-data-value', page)
@@ -114,10 +122,11 @@ async function updateAllPrices() {
 
     for (let i = 0; i < itemIDList.length; i++) {
         try {
-            console.log(`beginning delay ${(new Date).getSeconds()}`)
+            let beginningDelay = new Date
             await delay()
-            console.log(`ending delay ${(new Date).getSeconds()}`)
+            let endingDelay = new Date
             await updatePrices(itemIDList[i])
+            console.log(`updated item: ${itemIDList[i]} with starting delay: ${beginningDelay.getSeconds()} ending delay: ${endingDelay.getSeconds()} and completed at ${(new Date).toTimeString()}`)
         } catch (err) {
             console.log(err)
             writeError(`An error occured for this item: "${itemIDList[i]}" at index ${i}. ${err}`)

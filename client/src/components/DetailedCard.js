@@ -13,6 +13,7 @@ export default function(props) {
         url,
         price,
     } = props.data
+    console.log(props)
     return (
         <div className="grid grid-cols-3">
             <img src={pictureUrl}></img>

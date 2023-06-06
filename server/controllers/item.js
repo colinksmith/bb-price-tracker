@@ -6,18 +6,18 @@ const httpError = require("../utilities/httpError");
 require("express-async-errors");
 
 const { updatePrices, updateAllPrices } = require('../scraper/scraper')
-const { testEmail } = require('../nodeemailer/nodeemailer')
+const { mailOne } = require('../nodeemailer/nodeemailer')
 
 
 async function manageDailyTasks (req, res) {
   //get all data info
-  // await scraper.updateAllPrices();
+  await updateAllPrices();
   //check all pricewatches
   const priceWatches = await PriceWatch.find({}).populate('item')
   //send email if below price
   alertList = priceWatches.filter(pw => pw.desiredPrice >= pw.item.price.current)
   for (let i = 0; i < alertList.length; i++) {
-    await testEmail(alertList[i])
+    await mailOne(alertList[i])
   }
 }
 

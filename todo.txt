@@ -9,5 +9,13 @@ separate response for submitting pricewatch and item being scraped
     fix manage page when pricewatch is available but item is not
 
 schedule regular scraping of items
+    done
 
 send email when scraper finds price lower than pricewatch
+    done
+
+manage page has ability to delete pricewatch
+
+manage page shows pricewatch price
+
+nodemailer create link to manage page with email filled out

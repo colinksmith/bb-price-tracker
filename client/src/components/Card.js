@@ -56,17 +56,17 @@ export default function(props) {
     } = props.data.item
 
     return (
-        <div>
-            <img src={pictureUrl}></img>
+        <div className='flex flex-col gap-4 border p-5 items-center grow max-w-full sm:max-w-[50%] lg:max-w-sm mx-0 shadow-md'>
+            <img src={pictureUrl} className='max-h-52'></img>
             <h6>
                 <Link to={'/item/' + _id}>
                     {title}
                 </Link>
             </h6>
             <p>${price.current} -- Was ${price.noSale}</p>
-            <div>
-                <a href={url}>View on Bestbuy</a>
-                <button>
+            <div className='flex gap-4 mt-auto'>
+                <a className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded' href={url}>View on Bestbuy</a>
+                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'>
                     <Link to={'/item/' + _id}>
                         Track this price
                     </Link>

@@ -30,8 +30,8 @@ const HomePage = (props) => {
 
     return(
         <div>
-            <form className="flex flex-col gap-4 border p-5" onSubmit={props.handleSubmit}>
-                <h2>Create a price watch</h2>
+            <form className="flex flex-col gap-4 border p-5 shadow-lg" onSubmit={props.handleSubmit}>
+                <h2 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Create a price watch</h2>
                 <div>
                     <div className="mb-2 block">
                     <Label
@@ -84,9 +84,9 @@ const HomePage = (props) => {
                     Submit
                 </Button>
             </form>
-            <div>
-                <h3>Recent searches</h3>
-                <div className="flex justify-center my-6 gap-10">
+            <div className="flex flex-col gap-4">
+                <h3 className="mb-3 mt-5 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Recent price watches</h3>
+                <div className="flex justify-center my-6 lg:gap-2 flex-wrap">
                     {!loading && homeData.map((item, index) => 
                         <Card data={item} key={index} />
                     )}

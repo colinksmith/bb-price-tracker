@@ -24,4 +24,9 @@ router.post(
   priceWatchController.getItemsFromPriceWatch
 )
 
+router.delete(
+  "/delete/:id",
+  priceWatchController.deletePriceWatch
+)
+
 module.exports = router;

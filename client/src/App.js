@@ -20,7 +20,9 @@ const App = () => {
 
   // Fetch events from server
   const fetchPriceWatchData = async (e) => {
-    e.preventDefault()
+    if (e) {
+      e.preventDefault()
+    }
     // Database data from server
     const response = await APIService.getUserPriceWatch(formData);
     setManagePWData(response.data);
@@ -68,18 +70,14 @@ const App = () => {
   }
 
   /* Data Deletion */
-  // const handleDelete = async (event, idToDelete) => {
-  //   try {
-  //     const response = await APIService.deleteExample(idToDelete);
-  //   } catch (err) {
-  //     return
-  //   }
-
-  //   // Re-fetch data after delete
-  //   fetchData();
-  // }
-
-
+  const deletePriceWatch = async (event, idToDelete) => {
+    try {
+      const response = await APIService.deletePriceWatch(idToDelete);
+    } catch (err) {
+      return
+    }
+    fetchPriceWatchData()
+  }
 
   return (
     <div className="">
@@ -89,7 +87,14 @@ const App = () => {
         <Routes>
           <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
           <Route path="search" element={<Search />}></Route>
-          <Route path="manage" element={<Manage handleChangeInForm={handleChangeInForm} handleSubmit={fetchPriceWatchData} data={managePWData} />}></Route>
+          <Route path="manage" element={
+            <Manage 
+              handleChangeInForm={handleChangeInForm} 
+              handleSubmit={fetchPriceWatchData} 
+              data={managePWData} 
+              handleDeletePriceWatch={deletePriceWatch}
+            />
+          }></Route>
           <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} setFormData={setFormData} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 

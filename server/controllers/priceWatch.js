@@ -80,11 +80,12 @@ module.exports = {
 
     res.json(event);
   },
-  deleteExample: async (req, res) => {
+  deletePriceWatch: async (req, res) => {
     const { id } = req.params;
 
+    console.log('deleting the pricewatch ' + id)
     // Delete event by id
-    await Example.findByIdAndDelete(id);
+    await PriceWatch.findByIdAndDelete(id);
 
     res.sendStatus(204);
   },

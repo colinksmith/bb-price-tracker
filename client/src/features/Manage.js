@@ -35,7 +35,7 @@ export default function Manage(props) {
                 </Button>
             </form>
             {props.data.priceWatches && props.data.priceWatches.map((priceWatch, index) => 
-                <DetailedCard data={props.data.priceWatches[index].item} priceWatch={props.data.priceWatches[index]} key={index}/>
+                <DetailedCard data={props.data.priceWatches[index].item} priceWatch={props.data.priceWatches[index]} handleDelete={props.handleDeletePriceWatch} key={index}/>
                 )
             }
         </div>

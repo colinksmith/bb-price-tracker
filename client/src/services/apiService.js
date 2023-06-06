@@ -16,9 +16,9 @@ class APIService {
   getItemById(id) {
     return URL.get(`/item/${id}`);
   }
-  // deleteExample(id) {
-  //   return URL.delete(`/examples/${id}`)
-  // }
+  deletePriceWatch(id) {
+    return URL.delete(`/priceWatch/delete/${id}`)
+  }
   // deleteAllExamples(groupId) {
   //   return URL.delete(`/examples/deleteAllExamples/${groupId}`)
   // }

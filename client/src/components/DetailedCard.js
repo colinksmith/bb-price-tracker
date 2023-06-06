@@ -43,7 +43,7 @@ export default function(props) {
             </div>
             {props.priceWatch && 
                 <div className="col-start-3">
-                    <button>Delete this alert</button>
+                    <button onClick={(e) => {props.handleDelete(e, props.priceWatch._id)}}>Delete this alert</button>
                 </div>
             }
             

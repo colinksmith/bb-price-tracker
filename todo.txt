@@ -25,3 +25,13 @@ nodemailer create link to manage page with email filled out
 
 scraper for pre order items - not yet reviewed -> 0
     done
+
+make an about page
+
+remove search page
+
+make privacy policy, licensing and contact page
+
+link copyright to portfolio page
+
+add something to show requests were received and pricewatch was created, manage pricewatch deleted

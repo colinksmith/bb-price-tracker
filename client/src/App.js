@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Search from './features/Search';
+import About from './features/About';
 import Manage from './features/Manage';
 import Item from './features/Item'
 import ErrorPage from './features/ErrorPage'
@@ -93,7 +93,6 @@ const App = () => {
       <main className="mx-[10%] text-center flex flex-col justify-center">
         <Routes>
           <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
-          <Route path="search" element={<Search />}></Route>
           <Route path="manage" element={
             <Manage 
               handleChangeInForm={handleChangeInForm} 
@@ -111,6 +110,7 @@ const App = () => {
               fetchPriceWatchDataFromParams={fetchPriceWatchDataFromParams}
             />
           }></Route>
+          <Route path="about" element={<About />}></Route>
           <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} setFormData={setFormData} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
 

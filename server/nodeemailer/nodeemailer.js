@@ -1,31 +1,3 @@
-// let transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//         type: 'OAuth2',
-//         user: process.env.MAIL_USERNAME,
-//         pass: process.env.MAIL_PASSWORD,
-//         clientId: process.env.OAUTH_CLIENTID,
-//         clientSecret: process.env.OAUTH_CLIENT_SECRET,
-//         refreshToken: process.env.OAUTH_REFRESH_TOKEN
-//     }
-// });
-
-// let mailOptions = {
-//     from: tomerpacific@gmail.com,
-//     to: tomerpacific @gmail.com,
-//     subject: 'Nodemailer Project',
-//     text: 'Hi from your nodemailer project'
-//   };
-
-// transporter.sendMail(mailOptions, function (err, data) {
-//     if (err) {
-//         console.log("Error " + err);
-//     } else {
-//         console.log("Email sent successfully");
-//     }
-// });
-
-
 "use strict";
 const nodemailer = require("nodemailer");
 
@@ -44,8 +16,8 @@ async function mailOne(priceWatch) {
     },
   });
 
-  let message = `Hello, \n\n Your item ${priceWatch.item.title} has reached the price of $${priceWatch.item.price.current}, which triggered your price alert at $${priceWatch.desiredPrice}. \n\n Here is a link to the BestBuy website: ${priceWatch.item.url} \n\n Thank you for using our bestbuy price tracker. \n Have a wonderful day`
-  let messageHTML = `<p>Hello,</p> \n\n Your item ${priceWatch.item.title} has reached the price of $${priceWatch.item.price.current}, which triggered your price alert at $${priceWatch.desiredPrice}.</p> \n\n <p>Here is a link to the <a href="${priceWatch.item.url}">BestBuy website</a> </p> \n\n <p>Thank you for using our bestbuy price tracker.</p> \n <p>Have a wonderful day</p>`
+  let message = `Hello, \n\n Your item ${priceWatch.item.title} has reached the price of $${priceWatch.item.price.current}, which triggered your price alert at $${priceWatch.desiredPrice}. \n\n Here is a link to the BestBuy website: ${priceWatch.item.url} \n\n Your price alert has automatically been deleted. Click here to manage your alerts ${`http://localhost:3000/manage/${priceWatch.email}`}. \n\n Thank you for using our bestbuy price tracker. \n Have a wonderful day`
+  let messageHTML = `<p>Hello,</p>  Your item ${priceWatch.item.title} has reached the price of $${priceWatch.item.price.current}, which triggered your price alert at $${priceWatch.desiredPrice}.</p>  <p>Here is a link to the <a href="${priceWatch.item.url}">BestBuy website</a> </p> <p>Your price alert has automatically been deleted. <a href="${`http://localhost:3000/manage/${priceWatch.email}`}">Click here</a> to manage your alerts.</p> <p>Thank you for using our bestbuy price tracker.</p> \n <p>Have a wonderful day</p>`
 
   // send mail with defined transport object
   let info = await transporter.sendMail({

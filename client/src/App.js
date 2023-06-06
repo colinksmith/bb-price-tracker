@@ -28,6 +28,13 @@ const App = () => {
     setManagePWData(response.data);
   }
 
+  
+  const fetchPriceWatchDataFromParams = async (email) => {
+    // Database data from server
+    const response = await APIService.getUserPriceWatch(email);
+    setManagePWData(response.data);
+  }
+
   useEffect(() => {
     setFormData([])
   }, [location])
@@ -93,6 +100,15 @@ const App = () => {
               handleSubmit={fetchPriceWatchData} 
               data={managePWData} 
               handleDeletePriceWatch={deletePriceWatch}
+            />
+          }></Route>
+          <Route path="manage/:email" element={
+            <Manage 
+              handleChangeInForm={handleChangeInForm} 
+              handleSubmit={fetchPriceWatchData} 
+              data={managePWData} 
+              handleDeletePriceWatch={deletePriceWatch}
+              fetchPriceWatchDataFromParams={fetchPriceWatchDataFromParams}
             />
           }></Route>
           <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} setFormData={setFormData} />}></Route>

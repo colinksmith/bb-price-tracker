@@ -7,9 +7,19 @@ import {
     Button,
 } from 'flowbite-react'
 import { useExampleContext } from '../contexts/ExampleContext';
+import { useParams } from "react-router-dom"
+
 
 export default function Manage(props) {
+    const { email } = useParams()
+
     console.log(props.data)
+
+    useEffect(() => {
+        console.log(email)
+        props.fetchPriceWatchDataFromParams({email: email})
+    }, [])
+
     return (
         <div>
             <form className="flex flex-col gap-4 border p-5">

@@ -30,7 +30,7 @@ const HomePage = (props) => {
 
     return(
         <div>
-            <form className="flex flex-col gap-4 border p-5 shadow-lg" onSubmit={props.handleSubmit}>
+            <form className="flex flex-col gap-4 mt-4 border p-5 shadow-lg bg-white rounded" onSubmit={props.handleSubmit}>
                 <h2 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Create a price watch</h2>
                 <div>
                     <div className="mb-2 block">

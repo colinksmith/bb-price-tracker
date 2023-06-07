@@ -14,6 +14,7 @@ export default function(props) {
     const { id } = useParams()
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    console.log(data)
 
     // Fetch events from server
     const fetchData = async () => {
@@ -42,8 +43,8 @@ export default function(props) {
             <DetailedCard 
                 data={data}
             />
-            <form className="flex flex-col gap-4 border p-5" onSubmit={props.handleSubmit}>
-                <h2>Create a price watch</h2>
+            <form className="mt-3 flex flex-col gap-4 border p-5 shadow-md bg-white rounded" onSubmit={props.handleSubmit}>
+                <h2 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Create a price watch</h2>
                 <div>
                     <div className="mb-2 block">
                     <Label
@@ -89,7 +90,9 @@ export default function(props) {
                     Submit
                 </Button>
             </form>
-            <LineChart data={data}/>
+            <div className='mt-3 width-max aspect-square md:aspect-[2/1] relative shadow-md bg-white rounded'>
+                <LineChart data={data}/>
+            </div>
         </div>
     )
 }

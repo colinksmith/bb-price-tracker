@@ -27,8 +27,12 @@ scraper for pre order items - not yet reviewed -> 0
     done
 
 make an about page
+    done
+
+make about page pretty
 
 remove search page
+    done
 
 make privacy policy, licensing and contact page
 

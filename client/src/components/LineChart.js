@@ -33,7 +33,21 @@ const options = {
         title: {
             display: true,
             text: 'Price History',
+            font: {
+                size: 28,
+            },
         },
+        tooltip: {
+            callbacks: {
+                label: function(context) {                    
+                    let label = context.formattedValue
+                        .split(',')
+                    label.splice(2, 1)
+                    label[2] = ' $' + label[2].trim()
+                    return label.join(',')
+                }
+            }
+        }
     },
     scales: {
         x: {
@@ -84,6 +98,25 @@ const options = {
 // };
 
 function LineChart(props) {
+    const [windowWidth, setWindowWidth] = React.useState(window.innerWidth)
+    
+    React.useEffect(() => {
+        window.addEventListener("resize", function() {
+            setWindowWidth(window.innerWidth)
+        })
+    }, [])
+
+    let label = '...'
+    if (props.data.title) {
+        label = props.data.title.length > 40 ? props.data.title.slice(0, 37) + '...' : props.data.title
+    }
+
+    if (windowWidth < 768) {
+        options.aspectRatio = 1
+        if (props.data.title) {
+            label = props.data.title.length > 20 ? props.data.title.slice(0, 17) + '...' : props.data.title
+        }
+    }
 
     if (props.data.priceData) {
         props.data.priceData.map(dataPoint => {
@@ -93,12 +126,10 @@ function LineChart(props) {
         })
     }
 
-    console.log(props.data.priceData)
-
     const chartData = {
         datasets: [
             {
-                label: 'Dataset 1',
+                label: label,
                 data: props.data.priceData,
                 showLine: true,
                 borderColor: 'rgb(255, 99, 132)',

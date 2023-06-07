@@ -23,7 +23,7 @@ export default function Manage(props) {
 
     return (
         <div>
-            <form className="flex flex-col gap-4 border p-5">
+            <form className="flex flex-col gap-4 mt-4 border p-5 bg-white rounded">
                 <h2>Manage price watches</h2>
                 <div>
                     <div className="mb-2 block">

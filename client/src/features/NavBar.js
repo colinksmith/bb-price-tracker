@@ -52,13 +52,13 @@ export default function NavBar() {
               </button>
             </div>
             <Popover.Group className="hidden lg:flex lg:gap-x-12">    
-              <Link to="/" className="text-sm font-semibold leading-6 text-gray-900">
+              <Link to="/" className="text-sm font-semibold leading-6 text-gray-900 hover:underline">
                 Home
               </Link>
-              <Link to="/manage" className="text-sm font-semibold leading-6 text-gray-900">
+              <Link to="/manage" className="text-sm font-semibold leading-6 text-gray-900 hover:underline">
                 Manage
               </Link>
-              <Link to="/about" className="text-sm font-semibold leading-6 text-gray-900">
+              <Link to="/about" className="text-sm font-semibold leading-6 text-gray-900 hover:underline">
                 About
               </Link>
             </Popover.Group>

@@ -9,6 +9,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import APIService from './services/apiService';
 import HomePage from 'features/HomePage';
 
+import bgImg from './assets/joe-woods-4Zaq5xY5M_c-unsplash-2.jpg'
 
 const App = () => {
 
@@ -87,37 +88,39 @@ const App = () => {
   }
 
   return (
-    <div className="">
-      <NavBar />
+    <div style={{'--image-url': `url(${bgImg})`}} className='bg-[image:var(--image-url)] bg-fixed' >
+      <div className='flex flex-col backdrop-blur-sm min-h-screen'>
+        <NavBar />
 
-      <main className="mx-[10%] text-center flex flex-col justify-center">
-        <Routes>
-          <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
-          <Route path="manage" element={
-            <Manage 
-              handleChangeInForm={handleChangeInForm} 
-              handleSubmit={fetchPriceWatchData} 
-              data={managePWData} 
-              handleDeletePriceWatch={deletePriceWatch}
-            />
-          }></Route>
-          <Route path="manage/:email" element={
-            <Manage 
-              handleChangeInForm={handleChangeInForm} 
-              handleSubmit={fetchPriceWatchData} 
-              data={managePWData} 
-              handleDeletePriceWatch={deletePriceWatch}
-              fetchPriceWatchDataFromParams={fetchPriceWatchDataFromParams}
-            />
-          }></Route>
-          <Route path="about" element={<About />}></Route>
-          <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} setFormData={setFormData} />}></Route>
-          <Route path="*" element={<ErrorPage />}></Route>
+        <main className="mx-[10%] text-center flex flex-col justify-center">
+          <Routes>
+            <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
+            <Route path="manage" element={
+              <Manage 
+                handleChangeInForm={handleChangeInForm} 
+                handleSubmit={fetchPriceWatchData} 
+                data={managePWData} 
+                handleDeletePriceWatch={deletePriceWatch}
+              />
+            }></Route>
+            <Route path="manage/:email" element={
+              <Manage 
+                handleChangeInForm={handleChangeInForm} 
+                handleSubmit={fetchPriceWatchData} 
+                data={managePWData} 
+                handleDeletePriceWatch={deletePriceWatch}
+                fetchPriceWatchDataFromParams={fetchPriceWatchDataFromParams}
+              />
+            }></Route>
+            <Route path="about" element={<About />}></Route>
+            <Route path="item/:id" element={<Item handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} location={location} setFormData={setFormData} />}></Route>
+            <Route path="*" element={<ErrorPage />}></Route>
 
-        </Routes>
-      </main>
-      <Footer />
+          </Routes>
+        </main>
+        <Footer />
 
+      </div>
     </div>
   )
 }

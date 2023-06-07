@@ -75,10 +75,14 @@ async function scrapeItemData(destinationUrl) {
     let ratingCount = 0
     if (await page.$('.c-reviews')) {
         ratingCount = await getTextContent('.c-reviews', page)
+        ratingCount = Number( ratingCount.split(' ')[0].slice(1).replace(',', '') )
+        if (isNaN(ratingCount)) {
+            ratingCount = 0
+        }
     } else {
         ratingCount = 0
     }
-    output.ratingCount = Number( ratingCount.split(' ')[0].slice(1).replace(',', '') )
+    output.ratingCount = ratingCount
     output.priceWatches = []
 
     // console.log(output)

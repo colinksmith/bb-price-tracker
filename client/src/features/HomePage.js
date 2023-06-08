@@ -19,7 +19,6 @@ const HomePage = (props) => {
         setHomeData(response.data)
     }
 
-    console.log(homeData)
     useEffect(() => {
         setLoading(true)
         fetchHomeData()

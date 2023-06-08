@@ -38,7 +38,7 @@ const PriceWatch = mongoose.model("PriceWatch", PriceWatchSchema);
 
 // Schema for validating the recieved request.body when before an PriceWatch object is instantiated.
 const createPriceWatchSchema = Joi.object({
-  email: Joi.string().trim().min(1).max(100).required(),
+  email: Joi.string().trim().email({minDomainSegments: 2}).required(),
   desiredPrice: Joi.number().min(1).max(999999999).required(),
   initialUrl: Joi.string().trim().uri(),
   sku: Joi.number()

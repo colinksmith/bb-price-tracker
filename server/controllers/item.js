@@ -67,7 +67,7 @@ module.exports = {
 
   getRecent: async (req, res) => {
     const event = await PriceWatch
-      .find({})
+      .find({item: { $ne: null}})
       .sort({createdAt: -1})
       .populate('item')
       .limit(6)

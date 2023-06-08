@@ -72,7 +72,7 @@ const HomePage = (props) => {
                     </div>
                     <TextInput
                     id="price"
-                    type="string"
+                    type="number"
                     placeholder="$99.99"
                     required={true}
                     onChange={(e) => props.handleChangeInForm(e)}

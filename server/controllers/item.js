@@ -5,7 +5,7 @@ const { Item } = require("../models/Item")
 const httpError = require("../utilities/httpError");
 require("express-async-errors");
 
-const { updatePrices, updateAllPrices } = require('../scraper/scraper')
+const { updatePrices, updateAllPrices, scrapeItemData } = require('../scraper/scraper')
 const { mailOne } = require('../nodeemailer/nodeemailer')
 
 
@@ -23,6 +23,35 @@ async function manageDailyTasks (req, res) {
 }
 
 module.exports = {
+  create: async (priceWatch) => {
+    
+    let item = await Item.findOne({sku: priceWatch.sku})
+    if (item) {
+      await Item.updateOne(
+        {sku: priceWatch.sku},
+        {$push: {priceWatches: priceWatch._id}}
+      )
+      await PriceWatch.updateOne(
+        {_id: priceWatch._id},
+        {item: item._id}
+      )
+      console.log(`price watch added to existing item`)
+    } else {
+      const scrapeData = await scrapeItemData(priceWatch.initialUrl)
+      scrapeData.priceWatches.push(priceWatch._id)
+      scrapeData.priceData = []
+      scrapeData.priceData.push({date: new Date, price: scrapeData.price.current})
+      scrapeData.price.historicLow = scrapeData.price.current
+      scrapeData.price.historicHigh = scrapeData.price.noSale
+      scrapeData._id = new mongoose.Types.ObjectId()
+      item = await Item.create(scrapeData)
+      await PriceWatch.updateOne(
+        {_id: priceWatch._id},
+        {item: item._id}
+      )
+      console.log('price watch added and item scraped')
+    }
+  },
   getOne: async (req, res) => {
     const { id } = req.params;
 

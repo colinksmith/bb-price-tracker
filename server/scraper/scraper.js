@@ -33,7 +33,7 @@ async function scrapeItemData(destinationUrl) {
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
 
-    page.setDefaultNavigationTimeout(90000)
+    page.setDefaultNavigationTimeout(120000)
 
     await page.goto(destinationUrl)
 

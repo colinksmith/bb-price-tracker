@@ -8,6 +8,7 @@ import Footer from './features/Footer';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import APIService from './services/apiService';
 import HomePage from 'features/HomePage';
+import validation from './services/validation'
 
 import bgImg from './assets/joe-woods-4Zaq5xY5M_c-unsplash-2.jpg'
 
@@ -59,16 +60,13 @@ const App = () => {
   /* Data Submission */
   const submitPriceWatch = async (e) => {
     e.preventDefault();
-    setFormData(prevFormData => {
-      const temp = window.location.pathname.split('/')
-      const sku = Number(temp[temp.length - 1])
-      return ({ ...prevFormData, sku: sku })
-    })
+    console.log(formData)
     // Example
     try {
       // Axios automatically serializes object to JSON
       // https://masteringjs.io/tutorials/axios/post-json
       const response = await APIService.createPriceWatch(formData);
+      console.log(response)
     } catch (err) {
       return
     }

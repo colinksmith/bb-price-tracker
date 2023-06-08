@@ -3,53 +3,27 @@ const { Example } = require("../models/Example");
 const { PriceWatch } = require("../models/PriceWatch")
 const { Item } = require("../models/Item")
 const httpError = require("../utilities/httpError");
-const { scrapeItemData } = require('../scraper/scraper')
+const itemController = require ('./item')
 require("express-async-errors");
 
 module.exports = {
   create: async (req, res) => {
 
-    // consume the example 
-    const example = req.body;
-    const sku = example.initialUrl.split('=')
-    example.sku = Number(sku[sku.length - 1])
-    example._id = new mongoose.Types.ObjectId()
-    const result = await PriceWatch.create(example);
+    const priceWatch = req.body;
+    const sku = priceWatch.initialUrl.split('=')
+    priceWatch.sku = Number(sku[sku.length - 1])
+    priceWatch._id = new mongoose.Types.ObjectId()
+    const result = await PriceWatch.create(priceWatch);
     // console.log(result)
     const targetID = result._id;
-    const addedExamples = await PriceWatch.find({ _id: targetID })
+    const addedPriceWatch = await PriceWatch.find({ _id: targetID })
       .lean()
       .exec();
+    res.status(201).json({ message: "Price Watch created!", priceWatch: addedPriceWatch });
 
-    let item = await Item.findOne({sku: example.sku})
-    if (item) {
-      await Item.updateOne(
-        {sku: example.sku},
-        {$push: {priceWatches: example._id}}
-      )
-      await PriceWatch.updateOne(
-        {_id: result._id},
-        {item: item._id}
-      )
-      console.log(`price watch added to existing item`)
-    } else {
-      const scrapeData = await scrapeItemData(example.initialUrl)
-      scrapeData.priceWatches.push(example._id)
-      scrapeData.priceData = []
-      scrapeData.priceData.push({date: new Date, price: scrapeData.price.current})
-      scrapeData.price.historicLow = scrapeData.price.current
-      scrapeData.price.historicHigh = scrapeData.price.noSale
-      scrapeData._id = new mongoose.Types.ObjectId()
-      item = await Item.create(scrapeData)
-      console.log(result._id, item._id)
-      await PriceWatch.updateOne(
-        {_id: result._id},
-        {item: item._id}
-      )
-      console.log('price watch added and item scraped')
-    }
-    res.status(201).json({ message: "Price Watch created!", example: addedExamples });
+    await itemController.create(priceWatch)
   },
+  
   getItemsFromPriceWatch: async (req, res) => {
     const example = req.body;
     let priceWatches = await PriceWatch.find({email: req.body.email}).populate('item').exec()

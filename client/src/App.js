@@ -76,7 +76,8 @@ const App = () => {
   }
 
   /* Data Deletion */
-  const deletePriceWatch = async (event, idToDelete) => {
+  const deletePriceWatch = async (e, idToDelete) => {
+    e.preventDefault()
     try {
       const response = await APIService.deletePriceWatch(idToDelete);
     } catch (err) {

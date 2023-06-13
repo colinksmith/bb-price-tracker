@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DetailedCard from 'components/DetailedCard';
+import ErrorCard from 'components/ErrorCard'
 import { 
     Label, 
     TextInput,
@@ -45,10 +46,15 @@ export default function Manage(props) {
                     Submit
                 </Button>
             </form>
-            {props.data.priceWatches && props.data.priceWatches.map((priceWatch, index) => 
-                <DetailedCard data={props.data.priceWatches[index].item} priceWatch={props.data.priceWatches[index]} handleDelete={props.handleDeletePriceWatch} key={index}/>
-                )
+            {props.data.priceWatches && props.data.priceWatches.map((priceWatch, index) => {
+                if (props.data.priceWatches[index].item) {
+                    return <DetailedCard data={props.data.priceWatches[index].item} priceWatch={props.data.priceWatches[index]} handleDelete={props.handleDeletePriceWatch} key={index}/>
+                    
+                } else {
+                    return <ErrorCard url={props.data.priceWatches[index].initialUrl} priceWatch={props.data.priceWatches[index]} handleDelete={props.handleDeletePriceWatch} key={index}/>
+                }
             }
+            )}
         </div>
     )
 } 

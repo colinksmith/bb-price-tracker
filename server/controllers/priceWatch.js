@@ -3,11 +3,30 @@ const { Example } = require("../models/Example");
 const { PriceWatch } = require("../models/PriceWatch")
 const { Item } = require("../models/Item")
 const httpError = require("../utilities/httpError");
+const Joi = require("joi"); // data validation library
 const itemController = require ('./item')
 require("express-async-errors");
 
+function validate(req) {
+  const schema = Joi.object({
+    email: Joi.string().trim().email({minDomainSegments: 2}).required(),
+    desiredPrice: Joi.number().min(1).max(999999999).required(),
+    initialUrl: Joi.string().trim().uri(),
+    sku: Joi.number()
+  })
+  return schema.validate(req); 
+}
+
 module.exports = {
   create: async (req, res) => {
+    console.log(req.body)
+    // validateCreate(req, res)
+
+    const {error} = validate(req.body)
+    console.log(error)
+    if(error){
+      return res.status(200).send(error.details[0])
+    } 
 
     const priceWatch = req.body;
     const sku = priceWatch.initialUrl.split('=')
@@ -19,7 +38,7 @@ module.exports = {
     const addedPriceWatch = await PriceWatch.find({ _id: targetID })
       .lean()
       .exec();
-    res.status(201).json({ message: "Price Watch created!", priceWatch: addedPriceWatch });
+    res.status(201).json({ message: "Price Watch created.", priceWatch: addedPriceWatch });
 
     await itemController.create(priceWatch)
   },

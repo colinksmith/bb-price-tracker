@@ -15,7 +15,7 @@ function logSomething(data) {
 
 router.post(
     "/",
-    validateBody(createPriceWatchSchema),
+    // validateBody(createPriceWatchSchema),
     priceWatchController.create
 );
 

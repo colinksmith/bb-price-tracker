@@ -18,6 +18,8 @@ const App = () => {
 
   const [formData, setFormData] = useState([]);
 
+  const [respons, setRespons] = useState({})
+
   let location = useLocation()
 
   // Fetch events from server
@@ -66,6 +68,7 @@ const App = () => {
       // Axios automatically serializes object to JSON
       // https://masteringjs.io/tutorials/axios/post-json
       const response = await APIService.createPriceWatch(formData);
+      setRespons(response)
       console.log(response)
     } catch (err) {
       return
@@ -93,7 +96,7 @@ const App = () => {
 
         <main className="mx-[10%] text-center flex flex-col justify-center">
           <Routes>
-            <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} />}></Route>
+            <Route index element={<HomePage handleSubmit={submitPriceWatch} handleChangeInForm={handleChangeInForm} respons={respons}/>}></Route>
             <Route path="manage" element={
               <Manage 
                 handleChangeInForm={handleChangeInForm} 

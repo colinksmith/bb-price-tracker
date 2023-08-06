@@ -82,6 +82,12 @@ const HomePage = (props) => {
                 <Button type="submit">
                     Submit
                 </Button>
+                {props.respons.data && props.respons.status === 201 &&
+                    <p id="standard_success_help" className="mt-2 text-xs text-green-600 dark:text-green-400">{props.respons.data.message}</p>
+                }
+                {props.respons.data && props.respons.status === 200 &&
+                    <p id="standard_success_help" className="mt-2 text-xs text-red-600 dark:text-red-400"><span class="font-medium">Error: </span>{props.respons.data.message}</p>
+                }
             </form>
             <div className="flex flex-col gap-4">
                 <h3 className="mb-3 mt-5 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Recent price watches</h3>

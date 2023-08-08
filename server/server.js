@@ -6,16 +6,12 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("express-flash");
 const connectDB = require("./config/database");
-const schedule = require('node-schedule')
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
 const priceWatchRoutes = require("./routes/priceWatch");
 const itemRoutes = require("./routes/item")
-const itemController = require("./controllers/item")
 
-const scraper = require("./scraper/scraper")
-const nodeemailer = require("./nodeemailer/nodeemailer")
 
 // Enable CORS for client origin only
 const cors = require('cors')

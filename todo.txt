@@ -47,3 +47,7 @@ validate submissions for other pages, item page
 
 add logo, famicon
     done
+
+Make app work on cyclic (not crashing)
+
+change scraping logic for server to look for jobs periodically

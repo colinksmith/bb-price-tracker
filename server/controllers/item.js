@@ -5,7 +5,7 @@ const { Item } = require("../models/Item")
 const httpError = require("../utilities/httpError");
 require("express-async-errors");
 
-const { updatePrices, updateAllPrices, scrapeItemData } = require('../scraper/scraper')
+// const { updatePrices, updateAllPrices, scrapeItemData } = require('../scraper/scraper')
 const { mailOne } = require('../nodeemailer/nodeemailer')
 
 
@@ -37,7 +37,7 @@ module.exports = {
       )
       console.log(`price watch added to existing item`)
     } else {
-      const scrapeData = await scrapeItemData(priceWatch.initialUrl)
+      // const scrapeData = await scrapeItemData(priceWatch.initialUrl)
       scrapeData.priceWatches.push(priceWatch._id)
       scrapeData.priceData = []
       scrapeData.priceData.push({date: new Date, price: scrapeData.price.current})

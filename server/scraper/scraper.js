@@ -159,15 +159,15 @@ async function writeError(message) {
     }
 }
 
-const createDir = (dirPath) => {
-    fs.mkdirSync(dirPath, {recursive: true}, (error) => {
-        if (error) {
-            console.error('An error occurred: ', error)
-        } else {
-         //    console.log('Your directory is made!')
-        }
-    })
- }
+// const createDir = (dirPath) => {
+//     fs.mkdirSync(dirPath, {recursive: true}, (error) => {
+//         if (error) {
+//             console.error('An error occurred: ', error)
+//         } else {
+//          //    console.log('Your directory is made!')
+//         }
+//     })
+//  }
  const createFile = (filePath, fileContent) => {
     fs.writeFile(filePath, fileContent, (error) => {
         if (error) {

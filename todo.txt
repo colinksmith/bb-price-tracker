@@ -41,5 +41,9 @@ link copyright to portfolio page
 add something to show requests were received and pricewatch was created, manage pricewatch deleted
 
 validate submissions
+    Done for homepage
+
+validate submissions for other pages, item page
 
 add logo, famicon
+    done

@@ -7,7 +7,7 @@
     "dev": "concurrently \"npm:dev-client\" \"npm:dev-server\"",
     "dev-client": "cd client && npm start",
     "dev-server": "cd server && npm run dev",
-    "start": "cd server && npm start --silent",
+    "start": "cd server && npm start --logs-max=0",
     "build": "cd client && npm run build",
     "mock-cyclic": "npm run build && npm run start",
     "lint": "eslint .",

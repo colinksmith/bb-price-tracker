@@ -9,20 +9,22 @@ const { updatePrices, updateAllPrices, scrapeItemData } = require('../scraper/sc
 const { mailOne } = require('../nodeemailer/nodeemailer')
 
 
-async function manageDailyTasks (req, res) {
-  //get all data info
-  await updateAllPrices();
-  //check all pricewatches
-  const priceWatches = await PriceWatch.find({}).populate('item')
-  //send email if below price
-  let alertList = priceWatches.filter(pw => pw.desiredPrice >= pw.item.price.current)
-  for (let i = 0; i < alertList.length; i++) {
-    await mailOne(alertList[i])
-    await PriceWatch.findByIdAndDelete(alertList[i]._id);
-  }
-}
+
 
 module.exports = {
+
+  manageDailyTasks: async (req, res) => {
+    //get all data info
+    await updateAllPrices();
+    //check all pricewatches
+    const priceWatches = await PriceWatch.find({'item': {$ne : null}}).populate('item')
+    //send email if below price
+    let alertList = priceWatches.filter(pw => pw.desiredPrice >= pw.item.price.current)
+    for (let i = 0; i < alertList.length; i++) {
+      await mailOne(alertList[i])
+      await PriceWatch.findByIdAndDelete(alertList[i]._id);
+    }
+  },
   create: async (priceWatch) => {
     
     let item = await Item.findOne({sku: priceWatch.sku})
@@ -94,7 +96,6 @@ module.exports = {
   // },
 
   testing: async (req, res) => {
-    await manageDailyTasks()
-    res.sendStatus(204)
+    console.log('testing')
   },
 };

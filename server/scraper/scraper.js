@@ -23,6 +23,7 @@ async function getSrcContent(selector, page) {
         let src = await page.evaluate(element => element.src, element)
         return src
     } catch(err) {
+        console.log(`An error occured on this URL: ${page.url()}`)
         console.log(err)
         return null
     }
@@ -33,7 +34,7 @@ async function scrapeItemData(destinationUrl) {
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
 
-    page.setDefaultNavigationTimeout(120000)
+    page.setDefaultTimeout(90000)
 
     await page.goto(destinationUrl)
 
@@ -109,7 +110,7 @@ async function updatePrices(itemID) {
 }
 
 async function getItemIDList() {
-    let output = await PriceWatch.find({}).populate('item')
+    let output = await PriceWatch.find({'item': {$ne : null}}).populate('item')
     output = output.map(obj => obj.item._id)
     output = [...new Set(output)]
     return output

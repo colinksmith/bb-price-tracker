@@ -71,6 +71,6 @@ connectDB().then(() => {
 });
 
 // Schedule datascraping
-// const job = schedule.scheduleJob('5 0 * * *', async function(){
-//   itemController.manageDailyTasks()
-// });
+const job = schedule.scheduleJob('5 1 * * *', async function(){
+  itemController.manageDailyTasks()
+});

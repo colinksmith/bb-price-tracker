@@ -48,5 +48,18 @@ add logo, famicon
     done
 
 Make app work on cyclic (not crashing)
+    done
 
 change scraping logic for server to look for jobs periodically
+
+Make logic to prevent users from repeatedly entering price watches
+
+Change scraping logic to creating price watch to defer the scraping
+
+Add logic for remote server to grab un-scraped price watches and scrape them (every 30 min?)
+
+change message on manage items to show price watch is queued, but no scraped yet
+
+change schema to allow for items that have been queued and not scraped, versus scraping was attempted and failed
+
+change front page to featured items and also recents

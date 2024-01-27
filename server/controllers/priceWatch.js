@@ -40,7 +40,7 @@ module.exports = {
       .exec();
     res.status(201).json({ message: "Price Watch created.", priceWatch: addedPriceWatch });
 
-    await itemController.create(priceWatch)
+    // await itemController.create(priceWatch)
   },
   
   getItemsFromPriceWatch: async (req, res) => {

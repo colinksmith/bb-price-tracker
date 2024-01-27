@@ -25,6 +25,22 @@ module.exports = {
       await PriceWatch.findByIdAndDelete(alertList[i]._id);
     }
   },
+  manageFiveMinuteTasks: async (req, res) => {
+    const todo = await PriceWatch.find({'isScraped': false})
+    console.log(todo)
+    for (let i = 0; i > todo.length; i++) {
+      const priceWatch = todo[i]
+      console.log(priceWatch)
+      scrapeItemData(priceWatch.initialUrl)
+      await PriceWatch.findByIdAndUpdate(priceWatch._id, { isScraped: true})
+      console.log(priceWatch)
+    }
+
+    // todo.forEach((priceWatch) => {
+    //   scrapeItemData(priceWatch.initialUrl)
+    //   await PriceWatch.findById(priceWatch._id)
+    // })
+  },
   create: async (priceWatch) => {
     
     let item = await Item.findOne({sku: priceWatch.sku})

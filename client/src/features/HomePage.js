@@ -27,6 +27,8 @@ const HomePage = (props) => {
     // Render nothing while fetching for data from server
     if (loading) return null;
 
+    console.log(homeData)
+
     return(
         <div>
             <form className="flex flex-col gap-4 mt-4 border p-5 shadow-lg bg-white rounded" onSubmit={props.handleSubmit}>

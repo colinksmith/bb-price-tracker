@@ -26,6 +26,11 @@ const PriceWatchSchema = new mongoose.Schema(
     initialUrl: {
         type: String,
         required: true,
+    },
+    isScraped: {
+        type: Boolean,
+        required: false,
+        default: false,
     }
 
   },

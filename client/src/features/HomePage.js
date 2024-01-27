@@ -27,6 +27,8 @@ const HomePage = (props) => {
     // Render nothing while fetching for data from server
     if (loading) return null;
 
+    console.log(homeData)
+
     return(
         <div>
             <form className="flex flex-col gap-4 mt-4 border p-5 shadow-lg bg-white rounded" onSubmit={props.handleSubmit}>
@@ -92,9 +94,9 @@ const HomePage = (props) => {
             <div className="flex flex-col gap-4">
                 <h3 className="mb-3 mt-5 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Recent price watches</h3>
                 <div className="flex justify-center my-6 lg:gap-2 flex-wrap">
-                    {!loading && homeData.map((item, index) => 
+                    {/* {!loading && homeData.map((item, index) => 
                         <Card data={item} key={index} />
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>

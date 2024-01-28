@@ -76,6 +76,6 @@ const dailyJob = schedule.scheduleJob('5 1 * * *', async function(){
 });
 
 // Schedule creating items from priceWatches
-const fiveMinuteJob = schedule.scheduleJob('* 5 * * * *', async function() {
+const fiveMinuteJob = schedule.scheduleJob('*/5 * * * *', async function() {
   itemController.manageFiveMinuteTasks()
 })

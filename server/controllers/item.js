@@ -28,14 +28,16 @@ module.exports = {
   manageFiveMinuteTasks: async (req, res) => {
     const todo = await PriceWatch.find({'isScraped': false})
     if (todo.length) {
-      console.log('queued task found, starting scraping for queued tasks')
+      console.log(`queued task found, starting scraping for queued tasks at ${new Date()}`)
     }
     for (let i = 0; i < todo.length; i++) {
       const priceWatch = todo[i]
-      module.exports.create(priceWatch)
+      await module.exports.create(priceWatch)
       await PriceWatch.findByIdAndUpdate(priceWatch._id, { isScraped: true})
     }
+    if (todo.length) {
     console.log(`${todo.length} tasks found and scraped`)
+    }
   },
   create: async (priceWatch) => {
     

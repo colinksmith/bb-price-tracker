@@ -13,6 +13,7 @@ async function getTextContent(selector, page) {
         let text = await page.evaluate(element => element.textContent, element)
         return text
     } catch(err) {
+        console.log(`An error occured on this URL: ${page.url()}`)
         console.log(err)
         return null
     }
@@ -34,13 +35,14 @@ async function scrapeItemData(destinationUrl) {
     const browser = await puppeteer.launch({headless: false})
     const page = await browser.newPage()
 
+    page.setViewport({width: 1900, height: 1000})
     page.setDefaultTimeout(90000)
 
     await page.goto(destinationUrl)
 
     const sku = await getTextContent('.sku .product-data-value', page)
     output.sku = Number(sku)
-    output.model = await getTextContent('.model .product-data-value', page)
+    output.model = await getTextContent('.model .product-data-value', page) || null
     output.title = await getTextContent('.sku-title h1', page)
     output.pictureUrl = await getSrcContent('.primary-image-selected img', page)
     output.url = page.url()

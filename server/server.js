@@ -71,6 +71,11 @@ connectDB().then(() => {
 });
 
 // Schedule datascraping
-const job = schedule.scheduleJob('5 1 * * *', async function(){
+const dailyJob = schedule.scheduleJob('5 1 * * *', async function(){
   itemController.manageDailyTasks()
 });
+
+// Schedule creating items from priceWatches
+const fiveMinuteJob = schedule.scheduleJob('* 5 * * * *', async function() {
+  itemController.manageFiveMinuteTasks()
+})

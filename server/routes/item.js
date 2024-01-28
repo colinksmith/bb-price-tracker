@@ -18,7 +18,9 @@ const { createExampleSchema } = require("../models/Example");
 
 router.get("/recent", itemController.getRecent)
 
-router.get("/testing", itemController.manageDailyTasks)
+router.get("/test/dailyTasks", itemController.manageDailyTasks)
+
+router.get("/test/fiveMinuteTasks", itemController.manageFiveMinuteTasks)
 
 router.get("/:id", validateObjectId, itemController.getOne);
 

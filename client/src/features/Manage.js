@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom"
 export default function Manage(props) {
     const { email } = useParams()
 
-    console.log(props.data)
+    console.log(email)
 
     useEffect(() => {
         if (props.fetchPriceWatchDataFromParams) {
